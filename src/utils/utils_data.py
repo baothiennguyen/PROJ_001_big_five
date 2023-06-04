@@ -46,6 +46,3 @@ def make_sample_dataset():
     sample_dataset_df.to_csv(SAMPLE_DATASET_PATH, index=False)
 
     print(f"Sample dataset created successfully! View in {SAMPLE_DATASET_PATH}")
-
-
-make_sample_dataset()
