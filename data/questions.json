@@ -1,0 +1,252 @@
+{
+    "EXT1": {
+        "prompt": "I am the life of the party.",
+        "dimension": "Extraversion",
+        "orientation": true
+    },
+    "EXT2": {
+        "prompt": "I don't talk a lot.",
+        "dimension": "Extraversion",
+        "orientation": false
+    },
+    "EXT3": {
+        "prompt": "I feel comfortable around people.",
+        "dimension": "Extraversion",
+        "orientation": true
+    },
+    "EXT4": {
+        "prompt": "I keep in the background.",
+        "dimension": "Extraversion",
+        "orientation": false
+    },
+    "EXT5": {
+        "prompt": "I start conversations.",
+        "dimension": "Extraversion",
+        "orientation": true
+    },
+    "EXT6": {
+        "prompt": "I have little to say.",
+        "dimension": "Extraversion",
+        "orientation": false
+    },
+    "EXT7": {
+        "prompt": "I talk to a lot of different people at parties.",
+        "dimension": "Extraversion",
+        "orientation": true
+    },
+    "EXT8": {
+        "prompt": "I don't like to draw attention to myself.",
+        "dimension": "Extraversion",
+        "orientation": false
+    },
+    "EXT9": {
+        "prompt": "I don't mind being the center of attention.",
+        "dimension": "Extraversion",
+        "orientation": true
+    },
+    "EXT10": {
+        "prompt": "I am quiet around strangers.",
+        "dimension": "Extraversion",
+        "orientation": false
+    },
+    "EST1": {
+        "prompt": "I get stressed out easily.",
+        "dimension": "Neuroticism",
+        "orientation": true
+    },
+    "EST2": {
+        "prompt": "I am relaxed most of the time.",
+        "dimension": "Neuroticism",
+        "orientation": false
+    },
+    "EST3": {
+        "prompt": "I worry about things.",
+        "dimension": "Neuroticism",
+        "orientation": true
+    },
+    "EST4": {
+        "prompt": "I seldom feel blue.",
+        "dimension": "Neuroticism",
+        "orientation": false
+    },
+    "EST5": {
+        "prompt": "I am easily disturbed.",
+        "dimension": "Neuroticism",
+        "orientation": true
+    },
+    "EST6": {
+        "prompt": "I get upset easily.",
+        "dimension": "Neuroticism",
+        "orientation": true
+    },
+    "EST7": {
+        "prompt": "I change my mood a lot.",
+        "dimension": "Neuroticism",
+        "orientation": true
+    },
+    "EST8": {
+        "prompt": "I have frequent mood swings.",
+        "dimension": "Neuroticism",
+        "orientation": true
+    },
+    "EST9": {
+        "prompt": "I get irritated easily.",
+        "dimension": "Neuroticism",
+        "orientation": true
+    },
+    "EST10": {
+        "prompt": "I often feel blue.",
+        "dimension": "Neuroticism",
+        "orientation": true
+    },
+    "AGR1": {
+        "prompt": "I feel little concern for others.",
+        "dimension": "Agreeableness",
+        "orientation": false
+    },
+    "AGR2": {
+        "prompt": "I am interested in people.",
+        "dimension": "Agreeableness",
+        "orientation": true
+    },
+    "AGR3": {
+        "prompt": "I insult people.",
+        "dimension": "Agreeableness",
+        "orientation": false
+    },
+    "AGR4": {
+        "prompt": "I sympathize with others' feelings.",
+        "dimension": "Agreeableness",
+        "orientation": true
+    },
+    "AGR5": {
+        "prompt": "I am not interested in other people's problems.",
+        "dimension": "Agreeableness",
+        "orientation": false
+    },
+    "AGR6": {
+        "prompt": "I have a soft heart.",
+        "dimension": "Agreeableness",
+        "orientation": true
+    },
+    "AGR7": {
+        "prompt": "I am not really interested in others.",
+        "dimension": "Agreeableness",
+        "orientation": false
+    },
+    "AGR8": {
+        "prompt": "I take time out for others.",
+        "dimension": "Agreeableness",
+        "orientation": true
+    },
+    "AGR9": {
+        "prompt": "I feel others' emotions.",
+        "dimension": "Agreeableness",
+        "orientation": true
+    },
+    "AGR10": {
+        "prompt": "I make people feel at ease.",
+        "dimension": "Agreeableness",
+        "orientation": true
+    },
+    "CSN1": {
+        "prompt": "I am always prepared.",
+        "dimension": "Conscientiousness",
+        "orientation": true
+    },
+    "CSN2": {
+        "prompt": "I leave my belongings around.",
+        "dimension": "Conscientiousness",
+        "orientation": false
+    },
+    "CSN3": {
+        "prompt": "I pay attention to details.",
+        "dimension": "Conscientiousness",
+        "orientation": true
+    },
+    "CSN4": {
+        "prompt": "I make a mess of things.",
+        "dimension": "Conscientiousness",
+        "orientation": false
+    },
+    "CSN5": {
+        "prompt": "I get chores done right away.",
+        "dimension": "Conscientiousness",
+        "orientation": true
+    },
+    "CSN6": {
+        "prompt": "I often forget to put things back in their proper place.",
+        "dimension": "Conscientiousness",
+        "orientation": false
+    },
+    "CSN7": {
+        "prompt": "I like order.",
+        "dimension": "Conscientiousness",
+        "orientation": true
+    },
+    "CSN8": {
+        "prompt": "I shirk my duties.",
+        "dimension": "Conscientiousness",
+        "orientation": false
+    },
+    "CSN9": {
+        "prompt": "I follow a schedule.",
+        "dimension": "Conscientiousness",
+        "orientation": true
+    },
+    "CSN10": {
+        "prompt": "I am exacting in my work.",
+        "dimension": "Conscientiousness",
+        "orientation": true
+    },
+    "OPN1": {
+        "prompt": "I have a rich vocabulary.",
+        "dimension": "Openness",
+        "orientation": true
+    },
+    "OPN2": {
+        "prompt": "I have difficulty understanding abstract ideas.",
+        "dimension": "Openness",
+        "orientation": false
+    },
+    "OPN3": {
+        "prompt": "I have a vivid imagination.",
+        "dimension": "Openness",
+        "orientation": true
+    },
+    "OPN4": {
+        "prompt": "I am not interested in abstract ideas.",
+        "dimension": "Openness",
+        "orientation": false
+    },
+    "OPN5": {
+        "prompt": "I have excellent ideas.",
+        "dimension": "Openness",
+        "orientation": true
+    },
+    "OPN6": {
+        "prompt": "I do not have a good imagination.",
+        "dimension": "Openness",
+        "orientation": false
+    },
+    "OPN7": {
+        "prompt": "I am quick to understand things.",
+        "dimension": "Openness",
+        "orientation": true
+    },
+    "OPN8": {
+        "prompt": "I use difficult words.",
+        "dimension": "Openness",
+        "orientation": true
+    },
+    "OPN9": {
+        "prompt": "I spend time reflecting on things.",
+        "dimension": "Openness",
+        "orientation": true
+    },
+    "OPN10": {
+        "prompt": "I am full of ideas.",
+        "dimension": "Openness",
+        "orientation": true
+    }
+}
