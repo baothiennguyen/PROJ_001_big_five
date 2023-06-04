@@ -1,8 +1,10 @@
 # files
 sandbox.ipynb
+.flake8
 .vscode
 
 # directories
 venv/
 data/big-five-personality-test
 **/__pycache__/
+customtkinter_examples/
