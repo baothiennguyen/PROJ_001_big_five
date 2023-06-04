@@ -1,6 +1,11 @@
 import os
 import pandas as pd
-from path_utils import get_root_dir
+from utils_constants import (
+    DATASET_PATH,
+    SAMPLE_DATASET_PATH,
+    SAMPLE_SIZE,
+)
+from utils_path import get_root_dir
 from kaggle.api.kaggle_api_extended import KaggleApi
 
 
@@ -25,28 +30,22 @@ def get_kaggle_data():
     print("Dataset downloaded successfully!")
 
 
-def make_sample_dataset(sample_size=100):
-    BIG_DATASET_PATH = (
-        "data/big-five-personality-test/IPIP-FFM-data-8Nov2018/data-final.csv"
-    )
-    SAMPLE_DATASET_PATH = "data/sample_data.csv"
+def load_dataset():
+    dataset_df = pd.read_csv(DATASET_PATH, sep="\t")
+    columns_to_drop = [
+        col for col in dataset_df.columns if col[-1] not in [str(i) for i in range(10)]
+    ]
+    dataset_df.drop(columns_to_drop, axis=1, inplace=True)
+    return dataset_df
 
-    with open(BIG_DATASET_PATH) as dataset_file:
-        dataset_df = pd.read_csv(dataset_file)
 
-    sample_dataset_df = dataset_df.sample(n=sample_size)
+def make_sample_dataset():
+    dataset_df = load_dataset()
+
+    sample_dataset_df = dataset_df.sample(n=SAMPLE_SIZE)
     sample_dataset_df.to_csv(SAMPLE_DATASET_PATH, index=False)
 
     print(f"Sample dataset created successfully! View in {SAMPLE_DATASET_PATH}")
 
 
-def process_dataset(dataset_path):
-    with open(dataset_path) as dataset_file:
-        dataset_df = pd.read_csv(dataset_file)
-
-    dataset_df = dataset_df.drop()
-
-
 make_sample_dataset()
-
-process_dataset(dataset_path)
