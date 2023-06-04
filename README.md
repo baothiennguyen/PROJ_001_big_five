@@ -5,4 +5,4 @@ A GUI that allows you to analyse and visualise data from results of a big five p
 
 2. read data
 
-3. 
+3. run command: kaggle datasets download -d tunguz/big-five-personality-test

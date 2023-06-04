@@ -1,2 +1,8 @@
 sandbox.ipynb
+.vscode
+kaggle.json
+
 archive/
+kaggle/
+venv/
+data/big-five-personality-test
