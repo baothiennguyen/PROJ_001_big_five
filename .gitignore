@@ -3,3 +3,4 @@ sandbox.ipynb
 
 venv/
 data/big-five-personality-test
+src/utils/__pycache__/
