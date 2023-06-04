@@ -17,6 +17,6 @@ def get_root_dir():
         current_dir = os.path.dirname(current_dir)
 
     if root_dir is None:
-        raise Exception("Repo directory not found.")
+        raise Exception("Repo root directory not found.")
     else:
         return root_dir
