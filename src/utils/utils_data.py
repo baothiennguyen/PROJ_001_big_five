@@ -26,18 +26,27 @@ def get_kaggle_data():
 
 
 def make_sample_dataset(sample_size=100):
-    BIG_DATA_PATH = (
+    BIG_DATASET_PATH = (
         "data/big-five-personality-test/IPIP-FFM-data-8Nov2018/data-final.csv"
     )
-    SAMPLE_DATA_PATH = "data/sample_data.csv"
+    SAMPLE_DATASET_PATH = "data/sample_data.csv"
 
-    with open(BIG_DATA_PATH) as data_file:
-        data_df = pd.read_csv(data_file)
+    with open(BIG_DATASET_PATH) as dataset_file:
+        dataset_df = pd.read_csv(dataset_file)
 
-    sample_df = data_df.sample(n=sample_size)
-    sample_df.to_csv(SAMPLE_DATA_PATH, index=False)
+    sample_dataset_df = dataset_df.sample(n=sample_size)
+    sample_dataset_df.to_csv(SAMPLE_DATASET_PATH, index=False)
 
-    print(f"Sample dataset created successfully! View in {SAMPLE_DATA_PATH}")
+    print(f"Sample dataset created successfully! View in {SAMPLE_DATASET_PATH}")
+
+
+def process_dataset(dataset_path):
+    with open(dataset_path) as dataset_file:
+        dataset_df = pd.read_csv(dataset_file)
+
+    dataset_df = dataset_df.drop()
 
 
 make_sample_dataset()
+
+process_dataset(dataset_path)
