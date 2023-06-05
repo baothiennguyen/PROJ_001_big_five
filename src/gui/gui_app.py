@@ -1,9 +1,10 @@
+from typing import Callable
 import tkinter
 import customtkinter
+import matplotlib.pyplot as plt
+import matplotlib.backends.backend_tkagg as tkagg
 
-from gui_home import HomePage
-from gui_personality_test import PersonalityTestPage
-from gui_settings import SettingsPage
+from utils.utils_data import generate_figures
 
 
 customtkinter.set_appearance_mode(
@@ -55,10 +56,22 @@ class App(customtkinter.CTk):
         self.tabview.add("Data")
         self.tabview.add("Analytics")
 
-        self.test_button = customtkinter.CTkButton(
-            self, text="Take Test", command=self.button_callback
-        )
-        self.test_button.grid(row=1, column=2, padx=20, pady=20, sticky="new")
+        # self.test_button = customtkinter.CTkButton(
+        #     self, text="Take Test", command=self.button_callback
+        # )
+        # self.test_button.grid(row=1, column=2, padx=20, pady=20, sticky="new")
+
+        # Create main display
+        self.main_frame = customtkinter.CTkFrame(self, width=140, corner_radius=0)
+        self.main_frame.grid(row=1, column=1, sticky="nsew")
+        self.canvas = self.draw_figure(self.main_frame)
+
+    def draw_figure(self, root) -> tkagg.FigureCanvasTkAgg:
+        dist_figure = generate_figures()
+        canvas = tkagg.FigureCanvasTkAgg(dist_figure, master=root)
+        canvas.draw()
+        canvas.get_tk_widget().grid(row=0, column=0, sticky="nsew")
+        return canvas
 
     def button_callback(self):
         print("button pressed")
@@ -99,8 +112,3 @@ class App(customtkinter.CTk):
     # def hide_current_page(self):
     #     if self.current_page and self.current_page in self.pages:
     #         self.pages[self.current_page].pack_forget()
-
-
-if __name__ == "__main__":
-    app = App()
-    app.mainloop()

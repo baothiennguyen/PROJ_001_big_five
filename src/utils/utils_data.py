@@ -3,7 +3,7 @@ import pandas as pd
 import json
 import seaborn as sns
 import matplotlib.pyplot as plt
-from utils_constants import (
+from utils.utils_constants import (
     DATASET_PATH,
     SAMPLE_DATASET_PATH,
     SAMPLE_SIZE,
@@ -15,7 +15,7 @@ from utils_constants import (
     prompts_dict,
     orientations_dict,
 )
-from utils_path import get_root_dir
+from utils.utils_path import get_root_dir
 from kaggle.api.kaggle_api_extended import KaggleApi
 
 
@@ -102,22 +102,33 @@ def calculate_scores(dataset: pd.DataFrame, questions_json_path=QUESTIONS_JSON_P
 def get_distributions():
     make_sample_dataset(1000)
     make_questions_json()
-    dataset = load_dataset(sample=False)
+    dataset = load_dataset(sample=True)
+    total_scores = calculate_scores(dataset)
+    return total_scores
+
+
+def generate_figures():
+    dataset = load_dataset(sample=True)
     total_scores = calculate_scores(dataset)
 
     # Create subplots for each trait
-    fig, axes = plt.subplots(nrows=1, ncols=len(total_scores.columns), figsize=(12, 4))
+    fig, axes = plt.subplots(nrows=2, ncols=3, figsize=(12, 8))
+
+    subplot_index = [[0, 0], [0, 1], [0, 2], [1, 0], [1, 1]]
 
     # Plot distribution for each trait
     for i, column in enumerate(total_scores.columns):
-        sns.histplot(total_scores[column], binwidth=1, kde=True, ax=axes[i])
-        axes[i].set(xlim=(5, 50))
-        axes[i].set_title(f"Distribution of {column}")
-        axes[i].set_xlabel("Values")
-        axes[i].set_ylabel("Frequency")
+        row_i, col_i = subplot_index[i]
+        sns.histplot(total_scores[column], binwidth=1, kde=True, ax=axes[i // 3, i % 3])
+        axes[row_i, col_i].set(xlim=(5, 50))
+        axes[row_i, col_i].set_title(f"Distribution of {column}")
+        axes[row_i, col_i].set_xlabel("Values")
+        axes[row_i, col_i].set_ylabel("Frequency")
 
     plt.tight_layout()
     plt.show()
 
+    return fig
 
-get_distributions()
+
+# get_distributions()

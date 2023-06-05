@@ -1,5 +1,5 @@
 import os
-from utils_constants import PROJECT_ROOT
+from utils.utils_constants import PROJECT_ROOT
 
 
 def get_root_dir():
