@@ -101,7 +101,7 @@ Here's a run down of features, strikethrough features are implemented:
 ## 3. Screenshots
 
 ### 3.1 Home Menu
-![Screenshot](Screenshot_2023-06-07_1.png)
+![Screenshot](images/Screenshot_2023-06-07_1.png)
 
 ### 3.2 Data Analysis Page
-![Screenshot](Screenshot_2023-06-07_2.png)
+![Screenshot](images/Screenshot_2023-06-07_2.png)
