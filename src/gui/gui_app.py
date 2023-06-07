@@ -139,6 +139,7 @@ class NavigationMenu(customtkinter.CTkFrame):
             menu_button.grid(row=i, column=0, sticky="ew")
             self.menu_buttons[item_str] = menu_button
 
+    """
         # create navigation menu appearance settings
         self.appearance_mode_menu = customtkinter.CTkOptionMenu(
             self,
@@ -151,3 +152,4 @@ class NavigationMenu(customtkinter.CTkFrame):
 
     def change_appearance_mode_event(self, new_appearance_mode):
         customtkinter.set_appearance_mode(new_appearance_mode)
+    """

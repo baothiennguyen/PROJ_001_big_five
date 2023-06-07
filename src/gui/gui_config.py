@@ -30,7 +30,7 @@ class HomeMenuButton(customtkinter.CTkButton):
     ):
         kwargs.setdefault("height", 40)
         kwargs.setdefault("width", 200)
-        # kwargs.setdefault("corner_radius", 0)
+        kwargs.setdefault("corner_radius", 20)
         kwargs.setdefault("border_spacing", 20)
         # kwargs.setdefault("fg_color", "transparent")
         # kwargs.setdefault("hover_color", ("gray70", "gray30"))

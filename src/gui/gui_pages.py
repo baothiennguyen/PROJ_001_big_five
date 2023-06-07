@@ -18,8 +18,7 @@ class HomePage(Page):
     def __init__(self, master: any, menu_items: list[tuple[str, Callable]], **kwargs):
         kwargs.setdefault("page_name", HOME_KEY)
         super().__init__(master, **kwargs)
-        # self.page_frame
-        # self.page_frame.grid()
+
         self.page_frame.grid_rowconfigure(0, weight=1)
         self.page_frame.grid_rowconfigure(len(menu_items), weight=2)
         self.page_frame.grid_columnconfigure((0, 3), weight=1)
@@ -46,13 +45,76 @@ class DataAnalysisPage(Page):
         kwargs.setdefault("page_name", DATA_ANALYSIS_KEY)
         super().__init__(master, **kwargs)
 
-        self.canvas = self.draw_figure(self)
+        # Add configuration menu
+        self.page_frame.grid_rowconfigure(0, weight=1)
+        self.page_frame.grid_columnconfigure(1, weight=1)
+
+        self.config_menu_frame = customtkinter.CTkFrame(
+            self.page_frame, corner_radius=0, fg_color="transparent"
+        )
+        self.config_menu_frame.grid(row=0, column=0, sticky="nsew")
+        self.config_menu_frame.grid_rowconfigure(10, weight=1)
+
+        self.config_menu_label = customtkinter.CTkLabel(
+            self.config_menu_frame,
+            text="Data Configuration",
+            font=customtkinter.CTkFont(size=20, weight="bold"),
+        )
+        self.config_menu_label.grid(row=0, column=0, padx=20, pady=20, sticky="new")
+
+        # Add config menu options
+        self.optionmenu_1 = customtkinter.CTkOptionMenu(
+            self.config_menu_frame,
+            width=200,
+            values=["100", "1,000", "10,000", "100,000", "Full Dataset"],
+        )
+        self.optionmenu_1.grid(row=1, column=0, padx=20, pady=(10, 10))
+
+        self.seg_button_1 = customtkinter.CTkSegmentedButton(
+            self.config_menu_frame, width=200, values=["Distributions", "Correlations"]
+        )
+        self.seg_button_1.grid(row=2, column=0, padx=20, pady=(10, 10), sticky="ew")
+
+        self.optionmenu_2 = customtkinter.CTkOptionMenu(
+            self.config_menu_frame,
+            width=200,
+            values=[
+                "Agreeableness",
+                "Conscientiousness",
+                "Extraversion",
+                "Neuroticism",
+                "Openness",
+            ],
+        )
+        self.optionmenu_2.grid(row=3, column=0, padx=20, pady=(10, 10))
+
+        self.main_button_1 = customtkinter.CTkButton(
+            self.config_menu_frame,
+            corner_radius=20,
+            height=100,
+            border_width=2,
+            text="Plot",
+            text_color=("gray10", "#DCE4EE"),
+            font=customtkinter.CTkFont(size=20, weight="bold"),
+        )
+        self.main_button_1.grid(
+            row=4, column=0, padx=(20, 20), pady=(20, 20), sticky="nsew"
+        )
+
+        # set default values
+        self.optionmenu_1.set("Select Dataset Size")
+        self.seg_button_1.set("Distributions")
+        self.optionmenu_2.set("Select Trait")
+
+        # draw figures
+        self.canvas = self.draw_figure(self.page_frame)
+        self.canvas.get_tk_widget().grid(row=0, column=1, sticky="nsew")
 
     def draw_figure(self, master) -> tkagg.FigureCanvasTkAgg:
         dist_figure = generate_figures()
         canvas = tkagg.FigureCanvasTkAgg(dist_figure, master=master)
         canvas.draw()
-        canvas.get_tk_widget().grid(row=1, column=0, sticky="nsew")
+        # canvas.get_tk_widget().grid(row=0, column=1, sticky="nsew")
         return canvas
 
 
