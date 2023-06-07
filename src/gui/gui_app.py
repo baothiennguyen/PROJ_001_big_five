@@ -1,6 +1,8 @@
-from typing import Callable
+from typing import Callable, Optional, Tuple, Union
 import tkinter
 import customtkinter
+from customtkinter.windows.widgets.font import CTkFont
+from customtkinter.windows.widgets.image import CTkImage
 import matplotlib.pyplot as plt
 import matplotlib.backends.backend_tkagg as tkagg
 
@@ -24,91 +26,118 @@ class App(customtkinter.CTk):
         self.title("main.py")
         self.geometry(f"{1920}x{1080}")
 
-        # configure grid layout (3x3)
+        # configure grid layout (1x2)
         self.grid_columnconfigure(0, weight=0)
         self.grid_columnconfigure(1, weight=1)
-        self.grid_rowconfigure((0), weight=0)
-        self.grid_rowconfigure((1, 2), weight=1)
+        self.grid_rowconfigure((0), weight=1)
+        # self.grid_rowconfigure((1, 2), weight=1)
 
-        self.page_title = customtkinter.CTkLabel(
-            self,
+        # create navigation frame
+        self.navigation_frame = customtkinter.CTkFrame(self, corner_radius=0)
+        self.navigation_frame.grid(row=0, column=0, sticky="nsew")
+        self.navigation_frame.grid_rowconfigure(6, weight=1)
+        self.navigation_frame_label = customtkinter.CTkLabel(
+            self.navigation_frame,
+            text="Navigation Menu",
+            font=customtkinter.CTkFont(size=20, weight="bold"),
+        )
+        self.navigation_frame_label.grid(row=0, column=0, padx=20, pady=20)
+
+        # create page buttons in navigation frame
+        self.sidebar_button_1 = NavigationMenuButton(
+            self.navigation_frame,
+            text="Home",
+            command=self.button_callback,
+        )
+        self.sidebar_button_1.grid(row=1, column=0, sticky="ew")
+        self.sidebar_button_2 = NavigationMenuButton(
+            self.navigation_frame,
+            text="Data Analysis",
+            command=self.button_callback,
+        )
+        self.sidebar_button_2.grid(row=2, column=0, sticky="ew")
+        self.sidebar_button_3 = NavigationMenuButton(
+            self.navigation_frame,
+            text="Clustering",
+            command=self.button_callback,
+        )
+        self.sidebar_button_3.grid(row=3, column=0, sticky="ew")
+        self.sidebar_button_4 = NavigationMenuButton(
+            self.navigation_frame,
+            text="Take Test",
+            command=self.button_callback,
+        )
+        self.sidebar_button_4.grid(row=4, column=0, sticky="ew")
+        self.sidebar_button_5 = NavigationMenuButton(
+            self.navigation_frame,
+            text="Results",
+            command=self.button_callback,
+        )
+        self.sidebar_button_5.grid(row=5, column=0, sticky="ew")
+
+        self.appearance_mode_menu = customtkinter.CTkOptionMenu(
+            self.navigation_frame,
+            values=["Light", "Dark", "System"],
+            command=self.change_appearance_mode_event,
+        )
+        self.appearance_mode_menu.grid(row=7, column=0, padx=20, pady=20, sticky="s")
+
+        # Create main display frame
+        self.main_frame = customtkinter.CTkFrame(
+            self, corner_radius=0, fg_color="transparent"
+        )
+        self.main_frame.grid(row=0, column=1, sticky="nsew")
+        self.main_frame.grid_rowconfigure(1, weight=1)
+        self.main_frame.grid_columnconfigure(0, weight=1)
+        self.canvas = self.draw_figure(self.main_frame)
+        self.main_frame_label = customtkinter.CTkLabel(
+            self.main_frame,
             text="Main Heading",
             font=customtkinter.CTkFont(size=40, weight="bold"),
         )
-        self.page_title.grid(row=0, column=0, columnspan=3, padx=20, pady=20)
+        self.main_frame_label.grid(row=0, column=0, padx=20, pady=20)
 
-        # create sidebar frame with widgets
-        self.sidebar_frame = customtkinter.CTkFrame(self, width=140, corner_radius=0)
-        self.sidebar_frame.grid(row=1, column=0, rowspan=2, sticky="nsew")
-        self.sidebar_frame.grid_rowconfigure((0, 2), weight=0)
-        self.sidebar_frame.grid_rowconfigure(1, weight=1)
-        self.sidebar_label = customtkinter.CTkLabel(
-            self.sidebar_frame,
-            text="Dataset Visualisation",
-            font=customtkinter.CTkFont(size=20, weight="bold"),
-        )
-        self.sidebar_label.grid(row=0, column=0, padx=20, pady=(20, 10))
+        """
+        Create Pages
 
-        self.tabview = customtkinter.CTkTabview(
-            self.sidebar_frame, width=250, height=600
-        )
-        self.tabview.grid(row=1, column=0, padx=20, pady=10, sticky="n")
-        self.tabview.add("Data")
-        self.tabview.add("Analytics")
+        self.second_frame = secondFrame(self)
 
-        # self.test_button = customtkinter.CTkButton(
-        #     self, text="Take Test", command=self.button_callback
-        # )
-        # self.test_button.grid(row=1, column=2, padx=20, pady=20, sticky="new")
 
-        # Create main display
-        self.main_frame = customtkinter.CTkFrame(self, width=140, corner_radius=0)
-        self.main_frame.grid(row=1, column=1, sticky="nsew")
-        self.canvas = self.draw_figure(self.main_frame)
+        class secondFrame(customtkinter.CTkFrame)
+            def __init__(self):
+                super().__init__()
+                
+        """
 
     def draw_figure(self, root) -> tkagg.FigureCanvasTkAgg:
         dist_figure = generate_figures()
         canvas = tkagg.FigureCanvasTkAgg(dist_figure, master=root)
         canvas.draw()
-        canvas.get_tk_widget().grid(row=0, column=0, sticky="nsew")
+        canvas.get_tk_widget().grid(row=1, column=0, sticky="nsew")
         return canvas
 
     def button_callback(self):
         print("button pressed")
 
-    #     self.show_home_page()
+    def change_appearance_mode_event(self, new_appearance_mode):
+        customtkinter.set_appearance_mode(new_appearance_mode)
 
-    # def show_home_page(self):
-    #     self.hide_current_page()
 
-    #     if "home" not in self.pages:
-    #         self.pages["home"] = HomePage(
-    #             self.root, self.go_to_personality_test, self.go_to_settings
-    #         )
-
-    #     self.current_page = "home"
-    #     self.pages["home"].pack()
-
-    # def go_to_personality_test(self):
-    #     self.hide_current_page()
-
-    #     if "personality_test" not in self.pages:
-    #         self.pages["personality_test"] = PersonalityTestPage(
-    #             self.root, self.show_home_page
-    #         )
-
-    #     self.current_page = "personality_test"
-    #     self.pages["personality_test"].pack()
-
-    # def go_to_settings(self):
-    #     self.hide_current_page()
-
-    #     if "settings" not in self.pages:
-    #         self.pages["settings"] = SettingsPage(self, self.show_home_page)
-
-    #     self.current_page = "settings"
-    #     self.pages["settings"].pack()
-
-    # def hide_current_page(self):
-    #     if self.current_page and self.current_page in self.pages:
-    #         self.pages[self.current_page].pack_forget()
+class NavigationMenuButton(customtkinter.CTkButton):
+    def __init__(
+        self,
+        master: any,
+        **kwargs,
+    ):
+        kwargs.setdefault("height", 40)
+        kwargs.setdefault("corner_radius", 0)
+        kwargs.setdefault("border_spacing", 20)
+        kwargs.setdefault("fg_color", "transparent")
+        kwargs.setdefault("hover_color", ("gray70", "gray30"))
+        kwargs.setdefault("text_color", ("gray10", "gray90"))
+        kwargs.setdefault("font", customtkinter.CTkFont(size=20, weight="normal"))
+        kwargs.setdefault("anchor", "w")
+        super().__init__(
+            master,
+            **kwargs,
+        )
