@@ -22,6 +22,27 @@ class NavigationMenuButton(customtkinter.CTkButton):
         )
 
 
+class HomeMenuButton(customtkinter.CTkButton):
+    def __init__(
+        self,
+        master: any,
+        **kwargs,
+    ):
+        kwargs.setdefault("height", 40)
+        kwargs.setdefault("width", 200)
+        # kwargs.setdefault("corner_radius", 0)
+        kwargs.setdefault("border_spacing", 20)
+        # kwargs.setdefault("fg_color", "transparent")
+        # kwargs.setdefault("hover_color", ("gray70", "gray30"))
+        # kwargs.setdefault("text_color", ("gray10", "gray90"))
+        kwargs.setdefault("font", customtkinter.CTkFont(size=20, weight="normal"))
+        # kwargs.setdefault("anchor", "w")
+        super().__init__(
+            master,
+            **kwargs,
+        )
+
+
 class Page(customtkinter.CTkFrame):
     def __init__(
         self,
@@ -52,3 +73,5 @@ class Page(customtkinter.CTkFrame):
 
     def get_page_name(self):
         return self.page_name
+
+    # def page_frame

@@ -114,7 +114,7 @@ def generate_figures():
     # Create subplots for each trait
     fig, axes = plt.subplots(nrows=2, ncols=3, figsize=(12, 8))
 
-    subplot_index = [[0, 0], [0, 1], [0, 2], [1, 0], [1, 1]]
+    subplot_index = [(0, 0), (0, 1), (0, 2), (1, 0), (1, 1)]
 
     # Plot distribution for each trait
     for i, column in enumerate(total_scores.columns):

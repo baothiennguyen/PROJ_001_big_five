@@ -54,7 +54,7 @@ class App(customtkinter.CTk):
 
         # create pages
         self.pages: dict[str, Page] = {
-            HOME_KEY: HomePage(self),
+            HOME_KEY: HomePage(self, navigation_menu_items),
             DATA_ANALYSIS_KEY: DataAnalysisPage(self),
             CLUSTERING_KEY: ClusteringPage(self),
             TAKE_TEST_KEY: TakeTestPage(self),
@@ -130,13 +130,13 @@ class NavigationMenu(customtkinter.CTkFrame):
 
         # create navigation menu buttons
         self.menu_buttons: dict[str, NavigationMenuButton] = {}
-        for i, (item_str, item_command) in enumerate(menu_items):
+        for i, (item_str, item_command) in enumerate(menu_items, start=1):
             menu_button = NavigationMenuButton(
                 self,
                 text=item_str,
                 command=item_command,
             )
-            menu_button.grid(row=i + 1, column=0, sticky="ew")
+            menu_button.grid(row=i, column=0, sticky="ew")
             self.menu_buttons[item_str] = menu_button
 
         # create navigation menu appearance settings
