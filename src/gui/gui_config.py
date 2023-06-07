@@ -26,25 +26,29 @@ class Page(customtkinter.CTkFrame):
     def __init__(
         self,
         master: any,
-        page_title="Page Title",
+        page_name="Page Name",
         **kwargs,
     ):
         kwargs.setdefault("corner_radius", 0)
         kwargs.setdefault("fg_color", "transparent")
+        self.page_name = page_name
         super().__init__(
             master,
             **kwargs,
         )
+        self.grid_rowconfigure(1, weight=1)
+        self.grid_columnconfigure(0, weight=1)
         self.page_frame_label = customtkinter.CTkLabel(
             self,
-            text=page_title,
+            text=page_name,
             font=customtkinter.CTkFont(size=40, weight="bold"),
         )
-        self.page_frame_label.grid(row=0, column=0, padx=20, pady=20)
+        self.page_frame_label.grid(row=0, column=0, padx=20, pady=20, sticky="ew")
 
         self.page_frame = customtkinter.CTkFrame(
             self, corner_radius=0, fg_color="transparent"
         )
-        self.page_frame.grid(row=0, column=1, sticky="nsew")
-        self.page_frame.grid_rowconfigure(1, weight=1)
-        self.page_frame.grid_columnconfigure(0, weight=1)
+        self.page_frame.grid(row=1, column=0, sticky="nsew")
+
+    def get_page_name(self):
+        return self.page_name

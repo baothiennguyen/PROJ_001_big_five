@@ -15,13 +15,14 @@ from utils.utils_constants import (
 
 class HomePage(Page):
     def __init__(self, master: any, **kwargs):
-        kwargs.setdefault("page_title", HOME_KEY)
+        kwargs.setdefault("page_name", HOME_KEY)
         super().__init__(master, **kwargs)
+        # self.grid(row=0, column=1, sticky="nsew")
 
 
 class DataAnalysisPage(Page):
     def __init__(self, master: any, **kwargs):
-        kwargs.setdefault("page_title", DATA_ANALYSIS_KEY)
+        kwargs.setdefault("page_name", DATA_ANALYSIS_KEY)
         super().__init__(master, **kwargs)
 
         self.canvas = self.draw_figure(self)
@@ -36,23 +37,23 @@ class DataAnalysisPage(Page):
 
 class ClusteringPage(Page):
     def __init__(self, master: any, **kwargs):
-        kwargs.setdefault("page_title", CLUSTERING_KEY)
+        kwargs.setdefault("page_name", CLUSTERING_KEY)
         super().__init__(master, **kwargs)
 
 
 class TakeTestPage(Page):
     def __init__(self, master: any, **kwargs):
-        kwargs.setdefault("page_title", TAKE_TEST_KEY)
+        kwargs.setdefault("page_name", TAKE_TEST_KEY)
         super().__init__(master, **kwargs)
 
 
 class ResultsPage(Page):
     def __init__(self, master: any, **kwargs):
-        kwargs.setdefault("page_title", RESULTS_KEY)
+        kwargs.setdefault("page_name", RESULTS_KEY)
         super().__init__(master, **kwargs)
 
 
 class AboutPage(Page):
     def __init__(self, master: any, **kwargs):
-        kwargs.setdefault("page_title", ABOUT_KEY)
+        kwargs.setdefault("page_name", ABOUT_KEY)
         super().__init__(master, **kwargs)

@@ -29,6 +29,7 @@ customtkinter.set_default_color_theme(
 
 class App(customtkinter.CTk):
     def __init__(self):
+        self.current_page: Page = None
         super().__init__()
 
         # configure window
@@ -52,7 +53,7 @@ class App(customtkinter.CTk):
         self.navigation_menu.grid(row=0, column=0, sticky="nsew")
 
         # create pages
-        self.pages = {
+        self.pages: dict[str, Page] = {
             HOME_KEY: HomePage(self),
             DATA_ANALYSIS_KEY: DataAnalysisPage(self),
             CLUSTERING_KEY: ClusteringPage(self),
@@ -61,27 +62,47 @@ class App(customtkinter.CTk):
             ABOUT_KEY: AboutPage(self),
         }
 
-    def select_page(self, page_key):
-        # set button color for selected button
-        pass
+        # select default frame
+        self.select_page(HOME_KEY)
+        # self.page = Page(self)
+        # self.page.grid(row=0, column=1, sticky="nsew")
+
+    def get_page(self, page_name):
+        return self.pages.get(page_name)
+
+    def select_page(self, page_name):
+        if self.current_page is not None:
+            # clear current button and forget current page
+            current_page_name = self.current_page.get_page_name()
+            self.navigation_menu.menu_buttons[current_page_name].configure(
+                fg_color="transparent"
+            )
+            self.pages[current_page_name].grid_forget()
+
+        # set new button colour and show new page
+        self.navigation_menu.menu_buttons[page_name].configure(
+            fg_color=("gray75", "gray25")
+        )
+        self.pages[page_name].grid(row=0, column=1, sticky="nsew")
+        self.current_page = self.get_page(page_name)
 
     def home_button_event(self):
-        print("Home button pressed")
+        self.select_page(HOME_KEY)
 
     def data_analysis_button_event(self):
-        print("Data Analysis button pressed")
+        self.select_page(DATA_ANALYSIS_KEY)
 
     def clustering_button_event(self):
-        print("Clustering button pressed")
+        self.select_page(CLUSTERING_KEY)
 
     def take_test_button_event(self):
-        print("Take Test button pressed")
+        self.select_page(TAKE_TEST_KEY)
 
     def results_button_event(self):
-        print("Results button pressed")
+        self.select_page(RESULTS_KEY)
 
     def about_button_event(self):
-        print("About button pressed")
+        self.select_page(ABOUT_KEY)
 
 
 class NavigationMenu(customtkinter.CTkFrame):
@@ -108,7 +129,7 @@ class NavigationMenu(customtkinter.CTkFrame):
         self.navigation_frame_label.grid(row=0, column=0, padx=20, pady=20)
 
         # create navigation menu buttons
-        self.menu_buttons = {}
+        self.menu_buttons: dict[str, NavigationMenuButton] = {}
         for i, (item_str, item_command) in enumerate(menu_items):
             menu_button = NavigationMenuButton(
                 self,
