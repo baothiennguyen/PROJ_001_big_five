@@ -146,7 +146,7 @@ def generate_figures():
         axes[row_i, col_i].set_ylabel("Frequency")
 
     plt.tight_layout()
-    plt.show()
+    plt.close()
 
     return fig
 
