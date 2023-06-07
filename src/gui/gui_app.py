@@ -6,6 +6,7 @@ from customtkinter.windows.widgets.image import CTkImage
 import matplotlib.pyplot as plt
 import matplotlib.backends.backend_tkagg as tkagg
 
+from gui.gui_config import *
 from utils.utils_data import generate_figures
 
 
@@ -27,66 +28,21 @@ class App(customtkinter.CTk):
         self.geometry(f"{1920}x{1080}")
 
         # configure grid layout (1x2)
-        self.grid_columnconfigure(0, weight=0)
+        # self.grid_columnconfigure(0, weight=0)
         self.grid_columnconfigure(1, weight=1)
-        self.grid_rowconfigure((0), weight=1)
+        self.grid_rowconfigure(0, weight=1)
         # self.grid_rowconfigure((1, 2), weight=1)
 
-        # create navigation frame
-        self.navigation_frame = customtkinter.CTkFrame(self, corner_radius=0)
-        self.navigation_frame.grid(row=0, column=0, sticky="nsew")
-        self.navigation_frame.grid_rowconfigure(9, weight=1)
-        self.navigation_frame_label = customtkinter.CTkLabel(
-            self.navigation_frame,
-            text="Navigation Menu",
-            font=customtkinter.CTkFont(size=20, weight="bold"),
-        )
-        self.navigation_frame_label.grid(row=0, column=0, padx=20, pady=20)
-
-        # create page buttons in navigation frame
-        self.sidebar_button_1 = NavigationMenuButton(
-            self.navigation_frame,
-            text="Home",
-            command=self.button_callback,
-        )
-        self.sidebar_button_1.grid(row=1, column=0, sticky="ew")
-        self.sidebar_button_2 = NavigationMenuButton(
-            self.navigation_frame,
-            text="Data Analysis",
-            command=self.button_callback,
-        )
-        self.sidebar_button_2.grid(row=2, column=0, sticky="ew")
-        self.sidebar_button_3 = NavigationMenuButton(
-            self.navigation_frame,
-            text="Clustering",
-            command=self.button_callback,
-        )
-        self.sidebar_button_3.grid(row=3, column=0, sticky="ew")
-        self.sidebar_button_4 = NavigationMenuButton(
-            self.navigation_frame,
-            text="Take Test",
-            command=self.button_callback,
-        )
-        self.sidebar_button_4.grid(row=4, column=0, sticky="ew")
-        self.sidebar_button_5 = NavigationMenuButton(
-            self.navigation_frame,
-            text="Results",
-            command=self.button_callback,
-        )
-        self.sidebar_button_5.grid(row=5, column=0, sticky="ew")
-        self.sidebar_button_6 = NavigationMenuButton(
-            self.navigation_frame,
-            text="About",
-            command=self.button_callback,
-        )
-        self.sidebar_button_6.grid(row=6, column=0, sticky="ew")
-
-        self.appearance_mode_menu = customtkinter.CTkOptionMenu(
-            self.navigation_frame,
-            values=["Light", "Dark", "System"],
-            command=self.change_appearance_mode_event,
-        )
-        self.appearance_mode_menu.grid(row=10, column=0, padx=20, pady=20, sticky="s")
+        # create navigation menu
+        navigation_menu_items = [
+            ("Home", self.home_button_event),
+            ("Data Analysis", self.data_analysis_button_event),
+            ("Clustering", self.clustering_button_event),
+            ("Take Test", self.take_test_button_event),
+            ("Results", self.results_button_event),
+            ("About", self.about_button_event),
+        ]
+        self.navigation_menu = NavigationMenu(self, navigation_menu_items)
 
         # Create main display frame
         self.main_frame = customtkinter.CTkFrame(
@@ -122,28 +78,71 @@ class App(customtkinter.CTk):
         canvas.get_tk_widget().grid(row=1, column=0, sticky="nsew")
         return canvas
 
-    def button_callback(self):
-        print("button pressed")
+    def home_button_event(self):
+        print("Home button pressed")
 
-    def change_appearance_mode_event(self, new_appearance_mode):
-        customtkinter.set_appearance_mode(new_appearance_mode)
+    def data_analysis_button_event(self):
+        print("Data Analysis button pressed")
+
+    def clustering_button_event(self):
+        print("Clustering button pressed")
+
+    def take_test_button_event(self):
+        print("Take Test button pressed")
+
+    def results_button_event(self):
+        print("Results button pressed")
+
+    def about_button_event(self):
+        print("About button pressed")
 
 
-class NavigationMenuButton(customtkinter.CTkButton):
+class NavigationMenu(customtkinter.CTkFrame):
     def __init__(
         self,
         master: any,
+        menu_items: list[tuple[str, Callable]],
+        # commands for buttons: list(commands)
+        menu_title="Navigation Menu",
         **kwargs,
     ):
-        kwargs.setdefault("height", 40)
         kwargs.setdefault("corner_radius", 0)
-        kwargs.setdefault("border_spacing", 20)
-        kwargs.setdefault("fg_color", "transparent")
-        kwargs.setdefault("hover_color", ("gray70", "gray30"))
-        kwargs.setdefault("text_color", ("gray10", "gray90"))
-        kwargs.setdefault("font", customtkinter.CTkFont(size=20, weight="normal"))
-        kwargs.setdefault("anchor", "w")
         super().__init__(
             master,
             **kwargs,
         )
+        # create navigation menu frame
+        self.grid(row=0, column=0, sticky="nsew")
+        self.grid_rowconfigure(len(menu_items) + 1, weight=1)
+
+        # create navigation menu heading
+        self.navigation_frame_label = customtkinter.CTkLabel(
+            self,
+            text=menu_title,
+            font=customtkinter.CTkFont(size=20, weight="bold"),
+        )
+        self.navigation_frame_label.grid(row=0, column=0, padx=20, pady=20)
+
+        # create navigation menu buttons
+        self.menu_buttons = {}
+        for i, (item_str, item_command) in enumerate(menu_items):
+            menu_button = NavigationMenuButton(
+                self,
+                text=item_str,
+                command=item_command,
+            )
+            menu_button.grid(row=i + 1, column=0, sticky="ew")
+            self.menu_buttons[item_str] = menu_button
+
+        # create navigation menu appearance settings
+        self.appearance_mode_menu = customtkinter.CTkOptionMenu(
+            self,
+            values=["Light", "Dark", "System"],
+            command=self.change_appearance_mode_event,
+        )
+        self.appearance_mode_menu.grid(
+            row=len(menu_items) + 2, column=0, padx=20, pady=20, sticky="s"
+        )
+
+    def change_appearance_mode_event(self, new_appearance_mode):
+        customtkinter.set_appearance_mode(new_appearance_mode)
