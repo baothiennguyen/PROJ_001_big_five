@@ -35,7 +35,7 @@ class App(customtkinter.CTk):
         # create navigation frame
         self.navigation_frame = customtkinter.CTkFrame(self, corner_radius=0)
         self.navigation_frame.grid(row=0, column=0, sticky="nsew")
-        self.navigation_frame.grid_rowconfigure(6, weight=1)
+        self.navigation_frame.grid_rowconfigure(9, weight=1)
         self.navigation_frame_label = customtkinter.CTkLabel(
             self.navigation_frame,
             text="Navigation Menu",
@@ -74,13 +74,19 @@ class App(customtkinter.CTk):
             command=self.button_callback,
         )
         self.sidebar_button_5.grid(row=5, column=0, sticky="ew")
+        self.sidebar_button_6 = NavigationMenuButton(
+            self.navigation_frame,
+            text="About",
+            command=self.button_callback,
+        )
+        self.sidebar_button_6.grid(row=6, column=0, sticky="ew")
 
         self.appearance_mode_menu = customtkinter.CTkOptionMenu(
             self.navigation_frame,
             values=["Light", "Dark", "System"],
             command=self.change_appearance_mode_event,
         )
-        self.appearance_mode_menu.grid(row=7, column=0, padx=20, pady=20, sticky="s")
+        self.appearance_mode_menu.grid(row=10, column=0, padx=20, pady=20, sticky="s")
 
         # Create main display frame
         self.main_frame = customtkinter.CTkFrame(
