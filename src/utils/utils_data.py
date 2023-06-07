@@ -112,14 +112,34 @@ def generate_figures():
     total_scores = calculate_scores(dataset)
 
     # Create subplots for each trait
+
+    sns.set_theme(
+        style="dark",
+        rc={
+            "text.color": "white",
+            "axes.labelcolor": "white",
+            "axes.facecolor": "slategrey",
+            "patch.edgecolor": "lightgrey",
+            "figure.facecolor": "#242424",
+            "xtick.color": "white",
+            "ytick.color": "white",
+        },
+    )
+
+    palette = sns.color_palette("bright")
     fig, axes = plt.subplots(nrows=2, ncols=3, figsize=(12, 8))
-
+    fig.delaxes(axes[1, 2])
     subplot_index = [(0, 0), (0, 1), (0, 2), (1, 0), (1, 1)]
-
     # Plot distribution for each trait
     for i, column in enumerate(total_scores.columns):
         row_i, col_i = subplot_index[i]
-        sns.histplot(total_scores[column], binwidth=1, kde=True, ax=axes[i // 3, i % 3])
+        sns.histplot(
+            total_scores[column],
+            binwidth=1,
+            kde=True,
+            ax=axes[row_i, col_i],
+            color=palette[i],
+        )
         axes[row_i, col_i].set(xlim=(5, 50))
         axes[row_i, col_i].set_title(f"Distribution of {column}")
         axes[row_i, col_i].set_xlabel("Values")
