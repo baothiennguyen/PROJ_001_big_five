@@ -12,6 +12,14 @@ PROMPT_KEY = "prompt"
 DIMENSION_KEY = "dimension"
 ORIENTATION_KEY = "orientation"
 
+# Page Keys
+HOME_KEY = "Home"
+DATA_ANALYSIS_KEY = "Data Analysis"
+CLUSTERING_KEY = "Clustering"
+TAKE_TEST_KEY = "Take Test"
+RESULTS_KEY = "Results"
+ABOUT_KEY = "About"
+
 # Numbers
 SAMPLE_SIZE = 100
 

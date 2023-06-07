@@ -7,7 +7,16 @@ import matplotlib.pyplot as plt
 import matplotlib.backends.backend_tkagg as tkagg
 
 from gui.gui_config import *
+from gui.gui_pages import *
 from utils.utils_data import generate_figures
+from utils.utils_constants import (
+    HOME_KEY,
+    DATA_ANALYSIS_KEY,
+    CLUSTERING_KEY,
+    TAKE_TEST_KEY,
+    RESULTS_KEY,
+    ABOUT_KEY,
+)
 
 
 customtkinter.set_appearance_mode(
@@ -21,62 +30,40 @@ customtkinter.set_default_color_theme(
 class App(customtkinter.CTk):
     def __init__(self):
         super().__init__()
-        self.pages = {}  # Dictionary to store instances of each page
 
         # configure window
         self.title("main.py")
         self.geometry(f"{1920}x{1080}")
 
         # configure grid layout (1x2)
-        # self.grid_columnconfigure(0, weight=0)
         self.grid_columnconfigure(1, weight=1)
         self.grid_rowconfigure(0, weight=1)
-        # self.grid_rowconfigure((1, 2), weight=1)
 
         # create navigation menu
         navigation_menu_items = [
-            ("Home", self.home_button_event),
-            ("Data Analysis", self.data_analysis_button_event),
-            ("Clustering", self.clustering_button_event),
-            ("Take Test", self.take_test_button_event),
-            ("Results", self.results_button_event),
-            ("About", self.about_button_event),
+            (HOME_KEY, self.home_button_event),
+            (DATA_ANALYSIS_KEY, self.data_analysis_button_event),
+            (CLUSTERING_KEY, self.clustering_button_event),
+            (TAKE_TEST_KEY, self.take_test_button_event),
+            (RESULTS_KEY, self.results_button_event),
+            (ABOUT_KEY, self.about_button_event),
         ]
         self.navigation_menu = NavigationMenu(self, navigation_menu_items)
+        self.navigation_menu.grid(row=0, column=0, sticky="nsew")
 
-        # Create main display frame
-        self.main_frame = customtkinter.CTkFrame(
-            self, corner_radius=0, fg_color="transparent"
-        )
-        self.main_frame.grid(row=0, column=1, sticky="nsew")
-        self.main_frame.grid_rowconfigure(1, weight=1)
-        self.main_frame.grid_columnconfigure(0, weight=1)
-        self.canvas = self.draw_figure(self.main_frame)
-        self.main_frame_label = customtkinter.CTkLabel(
-            self.main_frame,
-            text="Main Heading",
-            font=customtkinter.CTkFont(size=40, weight="bold"),
-        )
-        self.main_frame_label.grid(row=0, column=0, padx=20, pady=20)
+        # create pages
+        self.pages = {
+            HOME_KEY: HomePage(self),
+            DATA_ANALYSIS_KEY: DataAnalysisPage(self),
+            CLUSTERING_KEY: ClusteringPage(self),
+            TAKE_TEST_KEY: TakeTestPage(self),
+            RESULTS_KEY: ResultsPage(self),
+            ABOUT_KEY: AboutPage(self),
+        }
 
-        """
-        Create Pages
-
-        self.second_frame = secondFrame(self)
-
-
-        class secondFrame(customtkinter.CTkFrame)
-            def __init__(self):
-                super().__init__()
-                
-        """
-
-    def draw_figure(self, root) -> tkagg.FigureCanvasTkAgg:
-        dist_figure = generate_figures()
-        canvas = tkagg.FigureCanvasTkAgg(dist_figure, master=root)
-        canvas.draw()
-        canvas.get_tk_widget().grid(row=1, column=0, sticky="nsew")
-        return canvas
+    def select_page(self, page_key):
+        # set button color for selected button
+        pass
 
     def home_button_event(self):
         print("Home button pressed")
@@ -102,7 +89,6 @@ class NavigationMenu(customtkinter.CTkFrame):
         self,
         master: any,
         menu_items: list[tuple[str, Callable]],
-        # commands for buttons: list(commands)
         menu_title="Navigation Menu",
         **kwargs,
     ):
@@ -111,8 +97,6 @@ class NavigationMenu(customtkinter.CTkFrame):
             master,
             **kwargs,
         )
-        # create navigation menu frame
-        self.grid(row=0, column=0, sticky="nsew")
         self.grid_rowconfigure(len(menu_items) + 1, weight=1)
 
         # create navigation menu heading
