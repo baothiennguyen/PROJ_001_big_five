@@ -9,13 +9,13 @@ class NavigationMenuButton(customtkinter.CTkButton):
         **kwargs,
     ):
         kwargs.setdefault("height", 40)
-        kwargs.setdefault("corner_radius", 0)
-        kwargs.setdefault("border_spacing", 20)
+        kwargs.setdefault("corner_radius", 20)
+        kwargs.setdefault("border_spacing", 10)
         kwargs.setdefault("fg_color", "transparent")
         kwargs.setdefault("hover_color", ("gray70", "gray30"))
         kwargs.setdefault("text_color", ("gray10", "gray90"))
         kwargs.setdefault("font", customtkinter.CTkFont(size=20, weight="normal"))
-        kwargs.setdefault("anchor", "w")
+        kwargs.setdefault("anchor", "center")
         super().__init__(
             master,
             **kwargs,
@@ -57,19 +57,30 @@ class Page(customtkinter.CTkFrame):
             master,
             **kwargs,
         )
-        self.grid_rowconfigure(1, weight=1)
-        self.grid_columnconfigure(0, weight=1)
-        self.page_frame_label = customtkinter.CTkLabel(
+        self.grid_rowconfigure(0, weight=1)
+        self.grid_columnconfigure(1, weight=1)
+
+        self.sidebar_frame = customtkinter.CTkFrame(
             self,
-            text=page_name,
-            font=customtkinter.CTkFont(size=40, weight="bold"),
+            width=1000,
+            corner_radius=0,
+            fg_color="gray20",  # fg_color="transparent"
         )
-        self.page_frame_label.grid(row=0, column=0, padx=20, pady=20, sticky="ew")
+        self.sidebar_frame.grid(row=0, column=0, sticky="nsew")
 
         self.page_frame = customtkinter.CTkFrame(
             self, corner_radius=0, fg_color="transparent"
         )
-        self.page_frame.grid(row=1, column=0, sticky="nsew")
+        self.page_frame.grid(row=0, column=1, sticky="nsew")
+
+        self.page_title = customtkinter.CTkLabel(
+            self.sidebar_frame,
+            width=300,
+            text=page_name,
+            font=customtkinter.CTkFont(size=40, weight="bold"),
+            anchor="center",
+        )
+        self.page_title.grid(row=0, column=0, padx=20, pady=20, sticky="n")
 
     def get_page_name(self):
         return self.page_name

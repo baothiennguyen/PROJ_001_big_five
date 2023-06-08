@@ -13,12 +13,12 @@ DIMENSION_KEY = "dimension"
 ORIENTATION_KEY = "orientation"
 
 # Page Keys
-HOME_KEY = "Home"
-DATA_ANALYSIS_KEY = "Data Analysis"
-CLUSTERING_KEY = "Clustering"
-TAKE_TEST_KEY = "Take Test"
-RESULTS_KEY = "Results"
-ABOUT_KEY = "About"
+HOME_PAGE_KEY = "Home"
+DATA_PAGE_KEY = "Data"
+CLUSTERING_PAGE_KEY = "Clustering"
+TEST_PAGE_KEY = "Test"
+RESULTS_PAGE_KEY = "Results"
+ABOUT_PAGE_KEY = "About"
 
 # Numbers
 SAMPLE_SIZE = 100
