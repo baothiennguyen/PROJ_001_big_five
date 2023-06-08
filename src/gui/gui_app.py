@@ -7,7 +7,9 @@ import matplotlib.pyplot as plt
 import matplotlib.backends.backend_tkagg as tkagg
 
 from gui.gui_config import *
-from gui.gui_pages import *
+from gui.gui_page_data import *
+from gui.gui_page_test import *
+from gui.gui_page_about import *
 from utils.utils_data import generate_figures
 from utils.utils_constants import (
     HOME_PAGE_KEY,
@@ -42,25 +44,25 @@ class App(customtkinter.CTk):
 
         # create page title
 
-        # create navigation menu
-        navigation_menu_items = [
+        # create menu bar
+        menu_bar_items = [
             # (HOME_PAGE_KEY, self.home_button_event),
-            (DATA_PAGE_KEY, self.data_analysis_button_event),
+            (DATA_PAGE_KEY, self.data_button_event),
             # (CLUSTERING_PAGE_KEY, self.clustering_button_event),
-            (TEST_PAGE_KEY, self.take_test_button_event),
+            (TEST_PAGE_KEY, self.test_button_event),
             # (RESULTS_PAGE_KEY, self.results_button_event),
             (ABOUT_PAGE_KEY, self.about_button_event),
         ]
-        self.navigation_menu = NavigationMenu(self, navigation_menu_items)
-        self.navigation_menu.grid(row=0, column=0, sticky="nsew")
+        self.menu_bar = MenuBar(self, menu_bar_items)
+        self.menu_bar.grid(row=0, column=0, sticky="nsew")
 
         # create pages
         self.pages: dict[str, Page] = {
-            HOME_PAGE_KEY: HomePage(self, navigation_menu_items),
-            DATA_PAGE_KEY: DataAnalysisPage(self),
-            CLUSTERING_PAGE_KEY: ClusteringPage(self),
-            TEST_PAGE_KEY: TakeTestPage(self),
-            RESULTS_PAGE_KEY: ResultsPage(self),
+            # HOME_PAGE_KEY: HomePage(self, navigation_menu_items),
+            DATA_PAGE_KEY: DataPage(self),
+            # CLUSTERING_PAGE_KEY: ClusteringPage(self),
+            TEST_PAGE_KEY: TestPage(self),
+            # RESULTS_PAGE_KEY: ResultsPage(self),
             ABOUT_PAGE_KEY: AboutPage(self),
         }
 
@@ -76,13 +78,13 @@ class App(customtkinter.CTk):
         if self.current_page is not None:
             # clear current button and forget current page
             current_page_name = self.current_page.get_page_name()
-            self.navigation_menu.menu_buttons[current_page_name].configure(
+            self.menu_bar.menu_buttons[current_page_name].configure(
                 fg_color="transparent", hover_color=("gray70", "gray30")
             )
             self.pages[current_page_name].grid_forget()
 
         # set new button colour and show new page
-        self.navigation_menu.menu_buttons[page_name].configure(
+        self.menu_bar.menu_buttons[page_name].configure(
             fg_color=("#3B8ED0", "#1F6AA5"),
             hover_color=("#3B8ED0", "#1F6AA5")
             # fg_color=("gray75", "gray25")
@@ -90,31 +92,31 @@ class App(customtkinter.CTk):
         self.pages[page_name].grid(row=1, column=0, sticky="nsew")
         self.current_page = self.get_page(page_name)
 
-    def home_button_event(self):
-        self.select_page(HOME_PAGE_KEY)
+    # def home_button_event(self):
+    #     self.select_page(HOME_PAGE_KEY)
 
-    def data_analysis_button_event(self):
+    def data_button_event(self):
         self.select_page(DATA_PAGE_KEY)
 
-    def clustering_button_event(self):
-        self.select_page(CLUSTERING_PAGE_KEY)
+    # def clustering_button_event(self):
+    #     self.select_page(CLUSTERING_PAGE_KEY)
 
-    def take_test_button_event(self):
+    def test_button_event(self):
         self.select_page(TEST_PAGE_KEY)
 
-    def results_button_event(self):
-        self.select_page(RESULTS_PAGE_KEY)
+    # def results_button_event(self):
+    #     self.select_page(RESULTS_PAGE_KEY)
 
     def about_button_event(self):
         self.select_page(ABOUT_PAGE_KEY)
 
 
-class NavigationMenu(customtkinter.CTkFrame):
+class MenuBar(customtkinter.CTkFrame):
     def __init__(
         self,
         master: any,
         menu_items: list[tuple[str, Callable]],
-        menu_title="Big Five by malgra",
+        app_title="Big Five by malgra",
         **kwargs,
     ):
         kwargs.setdefault("corner_radius", 0)
@@ -127,7 +129,7 @@ class NavigationMenu(customtkinter.CTkFrame):
         # create navigation menu heading
         self.navigation_frame_label = customtkinter.CTkLabel(
             self,
-            text=menu_title,
+            text=app_title,
             font=customtkinter.CTkFont(size=50, weight="normal"),
         )
         self.navigation_frame_label.grid(row=0, column=0, padx=20, pady=20)
