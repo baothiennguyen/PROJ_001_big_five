@@ -27,21 +27,32 @@ AGR_KEY = "Agreeableness"
 CSN_KEY = "Conscientiousness"
 OPN_KEY = "Openness"
 
+# Plot Keys
+DISTRIBUTIONS_KEY = "Distributions"
+CORRELATIONS_KEY = "Correlations"
+
 # Dataset sizes
-SMALL_KEY = "small"
-MEDIUM_KEY = "medium"
-LARGE_KEY = "large"
-FULL_KEY = "full"
+SMALL_STR_KEY = "Small (n = 100 values)"
+MEDIUM_STR_KEY = "Medium (n = 2,500 values)"
+LARGE_STR_KEY = "Large (n = 50,000 values)"
+FULL_STR_KEY = "Full Dataset (n = 1,015,341 values)"
 
 OPTION_KEY = "option"
 VALUE_KEY = "value"
 
+
 dataset_size_dict = {
-    SMALL_KEY: {OPTION_KEY: "Small (n = 100 values)", VALUE_KEY: 100},
-    MEDIUM_KEY: {OPTION_KEY: "Medium (n = 2,500 values)", VALUE_KEY: 2500},
-    LARGE_KEY: {OPTION_KEY: "Large (n = 50,000 values)", VALUE_KEY: 50000},
-    FULL_KEY: {OPTION_KEY: "Full Dataset (n = 1,015,341 values)", VALUE_KEY: None},
+    SMALL_STR_KEY: 100,
+    MEDIUM_STR_KEY: 2500,
+    LARGE_STR_KEY: 50000,
+    FULL_STR_KEY: None,
 }
+# dataset_size_dict = {
+#     SMALL_KEY: {OPTION_KEY: "Small (n = 100 values)", VALUE_KEY: 100},
+#     MEDIUM_KEY: {OPTION_KEY: "Medium (n = 2,500 values)", VALUE_KEY: 2500},
+#     LARGE_KEY: {OPTION_KEY: "Large (n = 50,000 values)", VALUE_KEY: 50000},
+#     FULL_KEY: {OPTION_KEY: "Full Dataset (n = 1,015,341 values)", VALUE_KEY: None},
+# }
 
 # Numbers
 SAMPLE_SIZE = 100

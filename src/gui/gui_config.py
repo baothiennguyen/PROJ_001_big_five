@@ -60,6 +60,7 @@ class Page(customtkinter.CTkFrame):
         self.grid_rowconfigure(0, weight=1)
         self.grid_columnconfigure(1, weight=1)
 
+        # Create Page Sidebar
         self.sidebar_frame = customtkinter.CTkFrame(
             self,
             width=1000,
@@ -68,11 +69,7 @@ class Page(customtkinter.CTkFrame):
         )
         self.sidebar_frame.grid(row=0, column=0, sticky="nsew")
 
-        self.page_frame = customtkinter.CTkFrame(
-            self, corner_radius=0, fg_color="transparent"
-        )
-        self.page_frame.grid(row=0, column=1, sticky="nsew")
-
+        # Create Page Title
         self.page_title = customtkinter.CTkLabel(
             self.sidebar_frame,
             width=300,
@@ -81,6 +78,21 @@ class Page(customtkinter.CTkFrame):
             anchor="center",
         )
         self.page_title.grid(row=0, column=0, padx=20, pady=20, sticky="n")
+
+        # Create Page Frame
+        self.page_frame = customtkinter.CTkFrame(
+            self, corner_radius=0, fg_color="transparent"
+        )
+        self.page_frame.grid(row=0, column=1, sticky="nsew")
+        self.page_frame.grid_rowconfigure(0, weight=1)
+
+        # Create Page Progress Bar
+        self.progressbar = customtkinter.CTkProgressBar(
+            self.page_frame, mode="indeterminate"
+        )
+        self.progressbar.grid(
+            row=1, column=0, padx=(20, 10), pady=(10, 10), sticky="ew"
+        )
 
     def get_page_name(self):
         return self.page_name

@@ -28,25 +28,32 @@ class DataPage(Page):
         self.sidebar_frame.grid_columnconfigure(0, weight=1)
 
         # Add sidebar menu options
-        self.optionmenu_1 = customtkinter.CTkOptionMenu(
+        # Datasize Option Menu
+        self.datasize_optionmenu = customtkinter.CTkOptionMenu(
             self.sidebar_frame,
             width=200,
             values=[
                 "Select Dataset Size",
-                dataset_size_dict.get(SMALL_KEY).get(OPTION_KEY),
-                dataset_size_dict.get(MEDIUM_KEY).get(OPTION_KEY),
-                dataset_size_dict.get(LARGE_KEY).get(OPTION_KEY),
-                dataset_size_dict.get(FULL_KEY).get(OPTION_KEY),
+                SMALL_STR_KEY,
+                MEDIUM_STR_KEY,
+                LARGE_STR_KEY,
+                FULL_STR_KEY,
             ],
         )
-        self.optionmenu_1.grid(row=1, column=0, padx=50, pady=(10, 10), sticky="ew")
-
-        self.seg_button_1 = customtkinter.CTkSegmentedButton(
-            self.sidebar_frame, width=200, values=["Distributions", "Correlations"]
+        self.datasize_optionmenu.grid(
+            row=1, column=0, padx=50, pady=(10, 10), sticky="ew"
         )
-        self.seg_button_1.grid(row=2, column=0, padx=50, pady=(10, 10), sticky="ew")
 
-        self.optionmenu_2 = customtkinter.CTkOptionMenu(
+        # Plot Type Segmented Button
+        self.plottype_segbutton = customtkinter.CTkSegmentedButton(
+            self.sidebar_frame, width=200, values=[DISTRIBUTIONS_KEY, CORRELATIONS_KEY]
+        )
+        self.plottype_segbutton.grid(
+            row=2, column=0, padx=50, pady=(10, 10), sticky="ew"
+        )
+
+        # Trait Option Menu
+        self.trait_optionmenu = customtkinter.CTkOptionMenu(
             self.sidebar_frame,
             width=200,
             values=[
@@ -58,9 +65,10 @@ class DataPage(Page):
                 OPN_KEY,
             ],
         )
-        self.optionmenu_2.grid(row=3, column=0, padx=50, pady=(10, 10), sticky="ew")
+        self.trait_optionmenu.grid(row=3, column=0, padx=50, pady=(10, 10), sticky="ew")
 
-        self.main_button_1 = customtkinter.CTkButton(
+        # Plot button
+        self.plot_button = customtkinter.CTkButton(
             self.sidebar_frame,
             corner_radius=25,
             height=100,
@@ -70,25 +78,72 @@ class DataPage(Page):
             font=customtkinter.CTkFont(size=20, weight="bold"),
             command=self.draw_figure,
         )
-        self.main_button_1.grid(
+        self.plot_button.grid(
             row=10, column=0, padx=(50, 50), pady=(50, 50), sticky="sew"
         )
 
         # set default values
-        self.optionmenu_1.set("Select Dataset Size")
-        self.seg_button_1.set("Distributions")
-        self.optionmenu_2.set("Select Trait")
+        self.datasize_optionmenu.set("Select Dataset Size")
+        self.plottype_segbutton.set(DISTRIBUTIONS_KEY)
+        self.trait_optionmenu.set("Select Trait")
+
+        # self.plot_button.configure(state="disabled")
+
+        # self.select = False
+        # while not self.select:
+        #     if self.datasize_optionmenu.get() == "Select Dataset Size":
+        #         self.plot_button.configure(state="disabled")
+        #     else:
+        #         self.plot_button.configure(state="normal")
+        #         self.select = True
 
         # draw figures
-        self.canvas = self.distribution_figure(self.page_frame)
-        self.canvas.get_tk_widget().grid(row=0, column=0, sticky="nsew")
+        # self.canvas = self.distribution_figure(self.page_frame)
+        # self.canvas.get_tk_widget().grid(row=0, column=0, sticky="nsew")
 
     def distribution_figure(self, master) -> tkagg.FigureCanvasTkAgg:
-        dist_figure = generate_figures()
+        dist_figure = generate_distributions_figure()
         canvas = tkagg.FigureCanvasTkAgg(dist_figure, master=master)
         canvas.draw()
         # canvas.get_tk_widget().grid(row=0, column=1, sticky="nsew")
         return canvas
 
     def draw_figure(self):
-        print("button pressed")
+        # Display loading status
+        self.plot_button.configure(text="Loading...", require_redraw=True)
+        self.progressbar.start()
+
+        # get relevant parameters from GUI widgets
+        data_size_str = self.datasize_optionmenu.get()
+        plot_type = self.plottype_segbutton.get()
+        trait_select = self.trait_optionmenu.get()
+        print(f"button pressed: {data_size_str}, {plot_type}, {trait_select}")
+
+        if data_size_str == "Select Dataset Size":
+            print("Select Dataset Size to plot.")
+            self.plot_button.configure(text="Plot")
+            self.progressbar.stop()
+            return
+
+        data_size = dataset_size_dict.get(data_size_str)
+
+        if data_size is None:
+            dataset = load_dataset(sample=False)
+        else:
+            dataset = sample_dataset(sample_size=data_size)
+
+        total_scores = calculate_scores(dataset)
+
+        if plot_type == DISTRIBUTIONS_KEY:
+            plot_figure = generate_distributions_figure(total_scores)
+        else:
+            print("Correlations not yet implemented :(")
+            self.plot_button.configure(text="Plot")
+            return
+
+        self.canvas = tkagg.FigureCanvasTkAgg(plot_figure, master=self.page_frame)
+        self.canvas.draw()
+        self.canvas.get_tk_widget().grid(row=0, column=0, sticky="nsew")
+
+        self.plot_button.configure(text="Plot")
+        self.progressbar.stop()

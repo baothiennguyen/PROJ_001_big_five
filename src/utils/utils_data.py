@@ -40,7 +40,7 @@ def get_kaggle_data():
     print("Dataset downloaded successfully!")
 
 
-def load_dataset(sample=True):
+def load_dataset(sample=True) -> pd.DataFrame:
     if sample:
         dataset_df = pd.read_csv(SAMPLE_DATASET_PATH).astype(float)
     else:
@@ -55,13 +55,14 @@ def load_dataset(sample=True):
     return dataset_df
 
 
-def make_sample_dataset(sample_size=SAMPLE_SIZE):
+def sample_dataset(sample_size=SAMPLE_SIZE) -> pd.DataFrame:
     dataset_df = load_dataset(sample=False)
 
     sample_dataset_df = dataset_df.sample(n=sample_size)
     sample_dataset_df.to_csv(SAMPLE_DATASET_PATH, index=False)
 
     print(f"Sample dataset created successfully! View in {SAMPLE_DATASET_PATH}")
+    return sample_dataset_df
 
 
 def make_questions_json(outpath=QUESTIONS_JSON_PATH):
@@ -78,7 +79,9 @@ def make_questions_json(outpath=QUESTIONS_JSON_PATH):
     return questions_dict
 
 
-def calculate_scores(dataset: pd.DataFrame, questions_json_path=QUESTIONS_JSON_PATH):
+def calculate_scores(
+    dataset: pd.DataFrame, questions_json_path=QUESTIONS_JSON_PATH
+) -> pd.DataFrame:
     with open(questions_json_path) as f_json:
         questions_dict = json.load(f_json)
 
@@ -100,16 +103,16 @@ def calculate_scores(dataset: pd.DataFrame, questions_json_path=QUESTIONS_JSON_P
 
 
 def get_distributions():
-    make_sample_dataset(1000)
+    sample_dataset(1000)
     make_questions_json()
     dataset = load_dataset(sample=True)
     total_scores = calculate_scores(dataset)
     return total_scores
 
 
-def generate_figures():
-    dataset = load_dataset(sample=True)
-    total_scores = calculate_scores(dataset)
+def generate_distributions_figure(total_scores):
+    # dataset = load_dataset(sample=True)
+    # total_scores = calculate_scores(dataset)
 
     # Create subplots for each trait
 

@@ -1,16 +1,16 @@
 from typing import Callable, Optional, Tuple, Union
 import tkinter
 import customtkinter
-from customtkinter.windows.widgets.font import CTkFont
-from customtkinter.windows.widgets.image import CTkImage
-import matplotlib.pyplot as plt
-import matplotlib.backends.backend_tkagg as tkagg
+
+# from customtkinter.windows.widgets.font import CTkFont
+# from customtkinter.windows.widgets.image import CTkImage
+# import matplotlib.pyplot as plt
+# import matplotlib.backends.backend_tkagg as tkagg
 
 from gui.gui_config import *
 from gui.gui_page_data import *
 from gui.gui_page_test import *
 from gui.gui_page_about import *
-from utils.utils_data import generate_figures
 from utils.utils_constants import (
     HOME_PAGE_KEY,
     DATA_PAGE_KEY,

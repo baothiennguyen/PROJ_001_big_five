@@ -3,7 +3,6 @@ import customtkinter
 import matplotlib.backends.backend_tkagg as tkagg
 
 from gui.gui_config import Page, HomeMenuButton
-from utils.utils_data import generate_figures
 from utils.utils_constants import (
     HOME_PAGE_KEY,
     DATA_PAGE_KEY,
