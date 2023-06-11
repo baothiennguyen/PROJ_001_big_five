@@ -24,7 +24,7 @@ class DataPage(Page):
         # Configure page
         self.page_frame.grid_rowconfigure(0, weight=1)
         self.page_frame.grid_columnconfigure(0, weight=1)
-        self.sidebar_frame.grid_rowconfigure(6, weight=1)
+        self.sidebar_frame.grid_rowconfigure(10, weight=1)
         self.sidebar_frame.grid_columnconfigure(0, weight=1)
 
         # Add sidebar menu options
@@ -67,11 +67,26 @@ class DataPage(Page):
         )
         self.trait_optionmenu.grid(row=3, column=0, padx=50, pady=(10, 10), sticky="ew")
 
+        # Re-sample button
+        self.resample_button = customtkinter.CTkButton(
+            self.sidebar_frame,
+            corner_radius=25,
+            height=80,
+            border_width=2,
+            text="Re-sample",
+            text_color=("gray10", "#DCE4EE"),
+            font=customtkinter.CTkFont(size=20, weight="bold"),
+            command=self.resample_dataset,
+        )
+        self.resample_button.grid(
+            row=11, column=0, padx=(50, 50), pady=25, sticky="sew"
+        )
+
         # Plot button
         self.plot_button = customtkinter.CTkButton(
             self.sidebar_frame,
             corner_radius=25,
-            height=100,
+            height=80,
             border_width=2,
             text="Plot",
             text_color=("gray10", "#DCE4EE"),
@@ -79,7 +94,7 @@ class DataPage(Page):
             command=self.draw_figure,
         )
         self.plot_button.grid(
-            row=10, column=0, padx=(50, 50), pady=(50, 50), sticky="sew"
+            row=12, column=0, padx=(50, 50), pady=(25, 50), sticky="sew"
         )
 
         # set default values
@@ -101,12 +116,20 @@ class DataPage(Page):
         # self.canvas = self.distribution_figure(self.page_frame)
         # self.canvas.get_tk_widget().grid(row=0, column=0, sticky="nsew")
 
-    def distribution_figure(self, master) -> tkagg.FigureCanvasTkAgg:
-        dist_figure = generate_distributions_figure()
-        canvas = tkagg.FigureCanvasTkAgg(dist_figure, master=master)
-        canvas.draw()
-        # canvas.get_tk_widget().grid(row=0, column=1, sticky="nsew")
-        return canvas
+    def resample_dataset(self):
+        # get relevant parameters from GUI widgets
+        data_size_str = self.datasize_optionmenu.get()
+        # plot_type = self.plottype_segbutton.get()
+        # trait_select = self.trait_optionmenu.get()
+        size_key = dataset_str_dict.get(data_size_str)
+
+        if data_size_str == "Select Dataset Size":
+            print("Select Dataset Size to resample.")
+            return
+
+        dataset_df = load_dataset()
+        sample_dataset(dataset_df, size_key)
+        self.draw_figure()
 
     def draw_figure(self):
         # Display loading status
@@ -125,12 +148,8 @@ class DataPage(Page):
             self.progressbar.stop()
             return
 
-        data_size = dataset_size_dict.get(data_size_str)
-
-        if data_size is None:
-            dataset = load_dataset(sample=False)
-        else:
-            dataset = sample_dataset(sample_size=data_size)
+        size_key = dataset_str_dict.get(data_size_str)
+        dataset = load_dataset(size_key)
 
         total_scores = calculate_scores(dataset)
 
@@ -147,3 +166,10 @@ class DataPage(Page):
 
         self.plot_button.configure(text="Plot")
         self.progressbar.stop()
+
+    def distribution_figure(self, master) -> tkagg.FigureCanvasTkAgg:
+        dist_figure = generate_distributions_figure()
+        canvas = tkagg.FigureCanvasTkAgg(dist_figure, master=master)
+        canvas.draw()
+        # canvas.get_tk_widget().grid(row=0, column=1, sticky="nsew")
+        return canvas

@@ -1,11 +1,57 @@
 # utils_constants.py
 
-# Configuration parameters
+# Titles
+APP_TITLE = "Big Five Personality Traits"
+MENUBAR_TITLE = "Big Five"
+
+# Dataset sizes
+SMALL_KEY = "small"
+MEDIUM_KEY = "medium"
+LARGE_KEY = "large"
+FULL_KEY = "full"
+
+
+SMALL_N = 100
+MEDIUM_N = 2500
+LARGE_N = 50000
+FULL_N = None
+
+SMALL_STR_KEY = "Small (n = 100 values)"
+MEDIUM_STR_KEY = "Medium (n = 2,500 values)"
+LARGE_STR_KEY = "Large (n = 50,000 values)"
+FULL_STR_KEY = "Full Dataset (n = 1,015,341 values)"
+
+dataset_size_dict = {
+    SMALL_KEY: SMALL_N,
+    MEDIUM_KEY: MEDIUM_N,
+    LARGE_KEY: LARGE_N,
+    FULL_KEY: FULL_N,
+}
+
+dataset_str_dict = {
+    SMALL_STR_KEY: SMALL_KEY,
+    MEDIUM_STR_KEY: MEDIUM_KEY,
+    LARGE_STR_KEY: LARGE_KEY,
+    FULL_STR_KEY: FULL_KEY,
+}
+
+
+# Dataset paths
 PROJECT_ROOT = ".project_root"
-DATASET_PATH = "data/big-five-personality-test/IPIP-FFM-data-8Nov2018/data-final.csv"
+FULL_DATASET_PATH = (
+    "data/big-five-personality-test/IPIP-FFM-data-8Nov2018/data-final.csv"
+)
 SAMPLE_DATASET_PATH = "data/sample_data.csv"
+DATA_DIR = "data/"
 QUESTIONS_JSON_PATH = "data/questions.json"
 # DATASET_PATH = "data/sample_data.csv"
+
+dataset_path_dict = {
+    SMALL_KEY: DATA_DIR + f"sample_dataset_{SMALL_N}.csv",
+    MEDIUM_KEY: DATA_DIR + f"sample_dataset_{MEDIUM_N}.csv",
+    LARGE_KEY: DATA_DIR + f"sample_dataset_{LARGE_N}.csv",
+    FULL_KEY: FULL_DATASET_PATH,
+}
 
 # Keys
 PROMPT_KEY = "prompt"
@@ -30,29 +76,8 @@ OPN_KEY = "Openness"
 # Plot Keys
 DISTRIBUTIONS_KEY = "Distributions"
 CORRELATIONS_KEY = "Correlations"
+CLUSTERS_KEY = "Clusters"
 
-# Dataset sizes
-SMALL_STR_KEY = "Small (n = 100 values)"
-MEDIUM_STR_KEY = "Medium (n = 2,500 values)"
-LARGE_STR_KEY = "Large (n = 50,000 values)"
-FULL_STR_KEY = "Full Dataset (n = 1,015,341 values)"
-
-OPTION_KEY = "option"
-VALUE_KEY = "value"
-
-
-dataset_size_dict = {
-    SMALL_STR_KEY: 100,
-    MEDIUM_STR_KEY: 2500,
-    LARGE_STR_KEY: 50000,
-    FULL_STR_KEY: None,
-}
-# dataset_size_dict = {
-#     SMALL_KEY: {OPTION_KEY: "Small (n = 100 values)", VALUE_KEY: 100},
-#     MEDIUM_KEY: {OPTION_KEY: "Medium (n = 2,500 values)", VALUE_KEY: 2500},
-#     LARGE_KEY: {OPTION_KEY: "Large (n = 50,000 values)", VALUE_KEY: 50000},
-#     FULL_KEY: {OPTION_KEY: "Full Dataset (n = 1,015,341 values)", VALUE_KEY: None},
-# }
 
 # Numbers
 SAMPLE_SIZE = 100

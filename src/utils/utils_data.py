@@ -3,18 +3,21 @@ import pandas as pd
 import json
 import seaborn as sns
 import matplotlib.pyplot as plt
-from utils.utils_constants import (
-    DATASET_PATH,
-    SAMPLE_DATASET_PATH,
-    SAMPLE_SIZE,
-    QUESTIONS_JSON_PATH,
-    PROMPT_KEY,
-    DIMENSION_KEY,
-    ORIENTATION_KEY,
-    dimensions_dict,
-    prompts_dict,
-    orientations_dict,
-)
+from typing import Literal, Union
+from utils.utils_constants import *
+
+# from utils.utils_constants import (
+#     DATASET_PATH,
+#     SAMPLE_DATASET_PATH,
+#     SAMPLE_SIZE,
+#     QUESTIONS_JSON_PATH,
+#     PROMPT_KEY,
+#     DIMENSION_KEY,
+#     ORIENTATION_KEY,
+#     dimensions_dict,
+#     prompts_dict,
+#     orientations_dict,
+# )
 from utils.utils_path import get_root_dir
 from kaggle.api.kaggle_api_extended import KaggleApi
 
@@ -40,11 +43,14 @@ def get_kaggle_data():
     print("Dataset downloaded successfully!")
 
 
-def load_dataset(sample=True) -> pd.DataFrame:
-    if sample:
-        dataset_df = pd.read_csv(SAMPLE_DATASET_PATH).astype(float)
-    else:
-        dataset_df = pd.read_csv(DATASET_PATH, sep="\t")
+def load_dataset(
+    size_key: Union[SMALL_KEY, MEDIUM_KEY, LARGE_KEY, FULL_KEY] = None,
+) -> pd.DataFrame:
+    """
+    Load and process dataset of different sizes
+    """
+    if (size_key == FULL_KEY) | (size_key is None):
+        dataset_df = pd.read_csv(FULL_DATASET_PATH, sep="\t")
         columns_to_drop = [
             col
             for col in dataset_df.columns
@@ -52,17 +58,43 @@ def load_dataset(sample=True) -> pd.DataFrame:
         ]
         dataset_df.drop(columns_to_drop, axis=1, inplace=True)
         dataset_df = dataset_df.astype(float)
+
+    else:
+        dataset_size_path = dataset_path_dict.get(size_key)
+        dataset_df = pd.read_csv(dataset_size_path).astype(float)
     return dataset_df
 
 
-def sample_dataset(sample_size=SAMPLE_SIZE) -> pd.DataFrame:
-    dataset_df = load_dataset(sample=False)
+def sample_datasets_all():
+    """
+    Load full dataset and create sample dataset files
+    """
+    dataset_df = load_dataset()
+    for size_key in [SMALL_KEY, MEDIUM_KEY, LARGE_KEY]:
+        sample_dataset(dataset_df, size_key)
 
-    sample_dataset_df = dataset_df.sample(n=sample_size)
-    sample_dataset_df.to_csv(SAMPLE_DATASET_PATH, index=False)
 
-    print(f"Sample dataset created successfully! View in {SAMPLE_DATASET_PATH}")
-    return sample_dataset_df
+def sample_dataset(
+    dataset_df: pd.DataFrame,
+    size_key: Union[SMALL_KEY, MEDIUM_KEY, LARGE_KEY],
+):
+    """
+    Load full dataset and create sample dataset files
+    """
+    n_samples = dataset_size_dict.get(size_key)
+    sample_dataset_df = dataset_df.sample(n=n_samples)
+    sample_dataset_df.to_csv(dataset_path_dict.get(size_key), index=False)
+    print(
+        f"Sample dataset with {n_samples} values created successfully! View in {DATA_DIR} directory."
+    )
+
+
+# def load_sample_datset()
+# def get_dataset(dataset_path):
+#     if dataset_path
+# check if file exists, if exists: load file, return dataset
+# if file not exists, make sample(n)
+# return get_dataset(dataset_path)
 
 
 def make_questions_json(outpath=QUESTIONS_JSON_PATH):
@@ -102,12 +134,13 @@ def calculate_scores(
     # dimension_scores = pd.DataFrame
 
 
-def get_distributions():
-    sample_dataset(1000)
-    make_questions_json()
-    dataset = load_dataset(sample=True)
-    total_scores = calculate_scores(dataset)
-    return total_scores
+# def make_samples():
+#     for size_key in [SMALL_KEY, MEDIUM_KEY, LARGE_KEY]:
+#         make_sample_dataset(size_key)
+#     make_questions_json()
+#     dataset = load_dataset(sample=True)
+#     total_scores = calculate_scores(dataset)
+#     return total_scores
 
 
 def generate_distributions_figure(total_scores):
@@ -155,3 +188,4 @@ def generate_distributions_figure(total_scores):
 
 
 # get_distributions()
+# make_sample_datasets()

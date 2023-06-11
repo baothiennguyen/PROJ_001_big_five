@@ -35,7 +35,7 @@ class App(customtkinter.CTk):
         super().__init__()
 
         # configure window
-        self.title("Big Five Personality Traits")
+        self.title(APP_TITLE)
         self.geometry(f"{1920}x{1080}")
 
         # configure grid layout (2x1)
@@ -53,7 +53,7 @@ class App(customtkinter.CTk):
             # (RESULTS_PAGE_KEY, self.results_button_event),
             (ABOUT_PAGE_KEY, self.about_button_event),
         ]
-        self.menu_bar = MenuBar(self, menu_bar_items)
+        self.menu_bar = MenuBar(self, menu_bar_items, menubar_title=MENUBAR_TITLE)
         self.menu_bar.grid(row=0, column=0, sticky="nsew")
 
         # create pages
@@ -116,7 +116,7 @@ class MenuBar(customtkinter.CTkFrame):
         self,
         master: any,
         menu_items: list[tuple[str, Callable]],
-        app_title="Big Five by malgra",
+        menubar_title="Menu Bar Title",
         **kwargs,
     ):
         kwargs.setdefault("corner_radius", 0)
@@ -129,7 +129,7 @@ class MenuBar(customtkinter.CTkFrame):
         # create navigation menu heading
         self.navigation_frame_label = customtkinter.CTkLabel(
             self,
-            text=app_title,
+            text=menubar_title,
             font=customtkinter.CTkFont(size=50, weight="normal"),
         )
         self.navigation_frame_label.grid(row=0, column=0, padx=20, pady=20)
