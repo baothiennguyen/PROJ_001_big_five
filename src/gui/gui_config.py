@@ -96,5 +96,3 @@ class Page(customtkinter.CTkFrame):
 
     def get_page_name(self):
         return self.page_name
-
-    # def page_frame

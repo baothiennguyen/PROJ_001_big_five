@@ -12,11 +12,8 @@ from gui.gui_page_data import *
 from gui.gui_page_test import *
 from gui.gui_page_about import *
 from utils.utils_constants import (
-    HOME_PAGE_KEY,
     DATA_PAGE_KEY,
-    CLUSTERING_PAGE_KEY,
     TEST_PAGE_KEY,
-    RESULTS_PAGE_KEY,
     ABOUT_PAGE_KEY,
 )
 
@@ -58,18 +55,13 @@ class App(customtkinter.CTk):
 
         # create pages
         self.pages: dict[str, Page] = {
-            # HOME_PAGE_KEY: HomePage(self, navigation_menu_items),
             DATA_PAGE_KEY: DataPage(self),
-            # CLUSTERING_PAGE_KEY: ClusteringPage(self),
             TEST_PAGE_KEY: TestPage(self),
-            # RESULTS_PAGE_KEY: ResultsPage(self),
             ABOUT_PAGE_KEY: AboutPage(self),
         }
 
         # select default frame
         self.select_page(DATA_PAGE_KEY)
-        # self.page = Page(self)
-        # self.page.grid(row=0, column=1, sticky="nsew")
 
     def get_page(self, page_name):
         return self.pages.get(page_name)
@@ -85,27 +77,16 @@ class App(customtkinter.CTk):
 
         # set new button colour and show new page
         self.menu_bar.menu_buttons[page_name].configure(
-            fg_color=("#3B8ED0", "#1F6AA5"),
-            hover_color=("#3B8ED0", "#1F6AA5")
-            # fg_color=("gray75", "gray25")
+            fg_color=("#3B8ED0", "#1F6AA5"), hover_color=("#3B8ED0", "#1F6AA5")
         )
         self.pages[page_name].grid(row=1, column=0, sticky="nsew")
         self.current_page = self.get_page(page_name)
 
-    # def home_button_event(self):
-    #     self.select_page(HOME_PAGE_KEY)
-
     def data_button_event(self):
         self.select_page(DATA_PAGE_KEY)
 
-    # def clustering_button_event(self):
-    #     self.select_page(CLUSTERING_PAGE_KEY)
-
     def test_button_event(self):
         self.select_page(TEST_PAGE_KEY)
-
-    # def results_button_event(self):
-    #     self.select_page(RESULTS_PAGE_KEY)
 
     def about_button_event(self):
         self.select_page(ABOUT_PAGE_KEY)
@@ -144,18 +125,3 @@ class MenuBar(customtkinter.CTkFrame):
             )
             menu_button.grid(row=0, column=i, padx=20, pady=20, sticky="ew")
             self.menu_buttons[item_str] = menu_button
-
-    """
-        # create navigation menu appearance settings
-        self.appearance_mode_menu = customtkinter.CTkOptionMenu(
-            self,
-            values=["Light", "Dark", "System"],
-            command=self.change_appearance_mode_event,
-        )
-        self.appearance_mode_menu.grid(
-            row=len(menu_items) + 2, column=0, padx=20, pady=20, sticky="s"
-        )
-
-    def change_appearance_mode_event(self, new_appearance_mode):
-        customtkinter.set_appearance_mode(new_appearance_mode)
-    """

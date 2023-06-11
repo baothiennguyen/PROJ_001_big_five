@@ -6,15 +6,6 @@ from gui.gui_config import Page, HomeMenuButton
 from utils.utils_data import *
 from utils.utils_constants import *
 
-# from utils.utils_constants import (
-#     HOME_PAGE_KEY,
-#     DATA_PAGE_KEY,
-#     CLUSTERING_PAGE_KEY,
-#     TEST_PAGE_KEY,
-#     RESULTS_PAGE_KEY,
-#     ABOUT_PAGE_KEY,
-# )
-
 
 class DataPage(Page):
     def __init__(self, master: any, **kwargs):
@@ -102,25 +93,9 @@ class DataPage(Page):
         self.plottype_segbutton.set(DISTRIBUTIONS_KEY)
         self.trait_optionmenu.set("Select Trait")
 
-        # self.plot_button.configure(state="disabled")
-
-        # self.select = False
-        # while not self.select:
-        #     if self.datasize_optionmenu.get() == "Select Dataset Size":
-        #         self.plot_button.configure(state="disabled")
-        #     else:
-        #         self.plot_button.configure(state="normal")
-        #         self.select = True
-
-        # draw figures
-        # self.canvas = self.distribution_figure(self.page_frame)
-        # self.canvas.get_tk_widget().grid(row=0, column=0, sticky="nsew")
-
     def resample_dataset(self):
         # get relevant parameters from GUI widgets
         data_size_str = self.datasize_optionmenu.get()
-        # plot_type = self.plottype_segbutton.get()
-        # trait_select = self.trait_optionmenu.get()
         size_key = dataset_str_dict.get(data_size_str)
 
         if data_size_str == "Select Dataset Size":
@@ -132,10 +107,6 @@ class DataPage(Page):
         self.draw_figure()
 
     def draw_figure(self):
-        # Display loading status
-        self.plot_button.configure(text="Loading...", require_redraw=True)
-        self.progressbar.start()
-
         # get relevant parameters from GUI widgets
         data_size_str = self.datasize_optionmenu.get()
         plot_type = self.plottype_segbutton.get()
@@ -144,8 +115,6 @@ class DataPage(Page):
 
         if data_size_str == "Select Dataset Size":
             print("Select Dataset Size to plot.")
-            self.plot_button.configure(text="Plot")
-            self.progressbar.stop()
             return
 
         size_key = dataset_str_dict.get(data_size_str)
@@ -166,10 +135,3 @@ class DataPage(Page):
 
         self.plot_button.configure(text="Plot")
         self.progressbar.stop()
-
-    def distribution_figure(self, master) -> tkagg.FigureCanvasTkAgg:
-        dist_figure = generate_distributions_figure()
-        canvas = tkagg.FigureCanvasTkAgg(dist_figure, master=master)
-        canvas.draw()
-        # canvas.get_tk_widget().grid(row=0, column=1, sticky="nsew")
-        return canvas

@@ -6,18 +6,6 @@ import matplotlib.pyplot as plt
 from typing import Literal, Union
 from utils.utils_constants import *
 
-# from utils.utils_constants import (
-#     DATASET_PATH,
-#     SAMPLE_DATASET_PATH,
-#     SAMPLE_SIZE,
-#     QUESTIONS_JSON_PATH,
-#     PROMPT_KEY,
-#     DIMENSION_KEY,
-#     ORIENTATION_KEY,
-#     dimensions_dict,
-#     prompts_dict,
-#     orientations_dict,
-# )
 from utils.utils_path import get_root_dir
 from kaggle.api.kaggle_api_extended import KaggleApi
 
@@ -89,14 +77,6 @@ def sample_dataset(
     )
 
 
-# def load_sample_datset()
-# def get_dataset(dataset_path):
-#     if dataset_path
-# check if file exists, if exists: load file, return dataset
-# if file not exists, make sample(n)
-# return get_dataset(dataset_path)
-
-
 def make_questions_json(outpath=QUESTIONS_JSON_PATH):
     questions_dict = {}
     for prompt_key in prompts_dict:
@@ -126,21 +106,6 @@ def calculate_scores(
     dataset[columns_to_reverse] = dataset[columns_to_reverse].replace(score_mapping)
     total_scores = dataset.groupby(dimensions_dict, axis=1).sum()
     return total_scores
-
-    # for group, data in grouped:
-    #     print(f"Trait Group: {group}")
-    #     print(data)
-    #     print()
-    # dimension_scores = pd.DataFrame
-
-
-# def make_samples():
-#     for size_key in [SMALL_KEY, MEDIUM_KEY, LARGE_KEY]:
-#         make_sample_dataset(size_key)
-#     make_questions_json()
-#     dataset = load_dataset(sample=True)
-#     total_scores = calculate_scores(dataset)
-#     return total_scores
 
 
 def generate_distributions_figure(total_scores):
@@ -185,7 +150,3 @@ def generate_distributions_figure(total_scores):
     plt.close()
 
     return fig
-
-
-# get_distributions()
-# make_sample_datasets()
