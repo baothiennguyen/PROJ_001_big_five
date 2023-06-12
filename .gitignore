@@ -2,7 +2,7 @@
 sandbox.ipynb
 .flake8
 .vscode
-data/sample_dataset**
+data/dataset**
 
 # directories
 venv/

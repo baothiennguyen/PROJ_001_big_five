@@ -1,4 +1,5 @@
 import os
+import numpy as np
 import pandas as pd
 import json
 import seaborn as sns
@@ -31,25 +32,47 @@ def get_kaggle_data():
     print("Dataset downloaded successfully!")
 
 
-def load_dataset(
-    size_key: Union[SMALL_KEY, MEDIUM_KEY, LARGE_KEY, FULL_KEY] = None,
+def process_dataset(
+    dataset_path=ORIGIN_DATASET_PATH, questions_json_path=QUESTIONS_JSON_PATH
+):
+    dataset_df = pd.read_csv(dataset_path, sep="\t")
+
+    # Drop non-question columns, replace 0 values, convert to
+    columns_to_drop = [
+        col for col in dataset_df.columns if col[-1] not in [str(i) for i in range(10)]
+    ]
+    dataset_df.drop(columns_to_drop, axis=1, inplace=True)
+    dataset_df.replace(0, np.nan, inplace=True)
+    dataset_df = dataset_df.astype("Int8")
+
+    # Reverse scores for negative-oriented questions
+    with open(questions_json_path) as f_json:
+        questions_dict = json.load(f_json)
+
+    columns_to_reverse = [
+        question_key
+        for question_key in dataset_df.columns
+        if not questions_dict.get(question_key).get(ORIENTATION_KEY)
+    ]
+    score_mapping = {1.0: 5.0, 2.0: 4.0, 4.0: 2.0, 5.0: 1.0}
+    dataset_df[columns_to_reverse] = dataset_df[columns_to_reverse].replace(
+        score_mapping
+    )
+    dataset_df = dataset_df.sub(1)
+
+    dataset_path = dataset_path_dict.get(FULL_KEY)
+    dataset_df.to_csv(dataset_path, index=False)
+    print(f"Full dataset with saved successfully! View at {dataset_path}.")
+
+
+def get_dataset(
+    size_key: Union[SMALL_KEY, MEDIUM_KEY, LARGE_KEY, FULL_KEY],
 ) -> pd.DataFrame:
     """
-    Load and process dataset of different sizes
+    Load datasets of different sizes
     """
-    if (size_key == FULL_KEY) | (size_key is None):
-        dataset_df = pd.read_csv(FULL_DATASET_PATH, sep="\t")
-        columns_to_drop = [
-            col
-            for col in dataset_df.columns
-            if col[-1] not in [str(i) for i in range(10)]
-        ]
-        dataset_df.drop(columns_to_drop, axis=1, inplace=True)
-        dataset_df = dataset_df.astype(float)
-
-    else:
-        dataset_size_path = dataset_path_dict.get(size_key)
-        dataset_df = pd.read_csv(dataset_size_path).astype(float)
+    dataset_path = dataset_path_dict.get(size_key)
+    dataset_df = pd.read_csv(dataset_path)  # .astype(float)
     return dataset_df
 
 
@@ -57,7 +80,8 @@ def sample_datasets_all():
     """
     Load full dataset and create sample dataset files
     """
-    dataset_df = load_dataset()
+    process_dataset()
+    dataset_df = get_dataset(FULL_KEY).astype("Int8")
     for size_key in [SMALL_KEY, MEDIUM_KEY, LARGE_KEY]:
         sample_dataset(dataset_df, size_key)
 
@@ -70,12 +94,12 @@ def sample_dataset(
     Load full dataset and create sample dataset files
     """
     n_samples = dataset_size_dict.get(size_key)
-    sample_dataset_df = dataset_df.sample(n=n_samples)
+    sample_dataset_df = dataset_df.sample(n=n_samples).astype("Int8")
 
     dataset_path = dataset_path_dict.get(size_key)
     sample_dataset_df.to_csv(dataset_path, index=False)
     print(
-        f"Sample dataset with {n_samples} values created successfully! View in {dataset_path} directory."
+        f"Sample dataset with {n_samples} values created successfully! View at {dataset_path}"
     )
 
 
@@ -93,27 +117,16 @@ def make_questions_json(outpath=QUESTIONS_JSON_PATH):
     return questions_dict
 
 
-def calculate_scores(
-    dataset: pd.DataFrame, questions_json_path=QUESTIONS_JSON_PATH
-) -> pd.DataFrame:
-    with open(questions_json_path) as f_json:
-        questions_dict = json.load(f_json)
-
-    columns_to_reverse = [
-        question_key
-        for question_key in dataset.columns
-        if not questions_dict.get(question_key).get(ORIENTATION_KEY)
-    ]
-    score_mapping = {1.0: 5.0, 2.0: 4.0, 4.0: 2.0, 5.0: 1.0}
-    dataset[columns_to_reverse] = dataset[columns_to_reverse].replace(score_mapping)
-    total_scores = dataset.groupby(dimensions_dict, axis=1).sum()
+def calculate_scores(size_key: Union[SMALL_KEY, MEDIUM_KEY, LARGE_KEY]) -> pd.DataFrame:
+    """
+    Return scores for datset of input size
+    """
+    dataset_df = get_dataset(size_key)
+    total_scores = dataset_df.groupby(dimensions_dict, axis=1).sum()
     return total_scores
 
 
 def generate_distributions_figure(total_scores):
-    # dataset = load_dataset(sample=True)
-    # total_scores = calculate_scores(dataset)
-
     # Create subplots for each trait
 
     sns.set_theme(
@@ -130,25 +143,28 @@ def generate_distributions_figure(total_scores):
     )
 
     palette = sns.color_palette("bright")
-    fig, axes = plt.subplots(nrows=2, ncols=3, figsize=(12, 8))
-    fig.delaxes(axes[1, 2])
-    subplot_index = [(0, 0), (0, 1), (0, 2), (1, 0), (1, 1)]
-    # Plot distribution for each trait
-    for i, column in enumerate(total_scores.columns):
-        row_i, col_i = subplot_index[i]
+
+    fig = fig = plt.figure(layout="tight")
+    ax_dict = fig.subplot_mosaic(
+        [
+            [AGR_KEY, AGR_KEY, CSN_KEY, CSN_KEY, OPN_KEY, OPN_KEY],
+            [".", EXT_KEY, EXT_KEY, EST_KEY, EST_KEY, "."],
+        ],
+    )
+    for i, trait_key in enumerate([EXT_KEY, EST_KEY, AGR_KEY, CSN_KEY, OPN_KEY]):
         sns.histplot(
-            total_scores[column],
+            total_scores[trait_key],
             binwidth=1,
             kde=True,
-            ax=axes[row_i, col_i],
+            kde_kws={"bw_adjust": 2},
+            ax=ax_dict[trait_key],
             color=palette[i],
         )
-        axes[row_i, col_i].set(xlim=(5, 50))
-        axes[row_i, col_i].set_title(f"Distribution of {column}")
-        axes[row_i, col_i].set_xlabel("Values")
-        axes[row_i, col_i].set_ylabel("Frequency")
+        ax_dict[trait_key].set(xlim=(0, 40))
+        ax_dict[trait_key].set_title(f"Distribution of {trait_key}")
+        ax_dict[trait_key].set_xlabel("Values")
+        ax_dict[trait_key].set_ylabel("Frequency")
 
-    plt.tight_layout()
     plt.close()
 
     return fig

@@ -8,7 +8,7 @@ def main():
     if any(
         [
             not os.path.exists(dataset_path_dict.get(key))
-            for key in [SMALL_KEY, MEDIUM_KEY, LARGE_KEY]
+            for key in [SMALL_KEY, MEDIUM_KEY, LARGE_KEY, FULL_KEY]
         ]
     ):
         sample_datasets_all()

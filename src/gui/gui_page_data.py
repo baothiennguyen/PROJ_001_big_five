@@ -97,7 +97,7 @@ class DataPage(Page):
         # get relevant parameters from GUI widgets
         data_size_str = self.datasize_optionmenu.get()
         size_key = dataset_str_dict.get(data_size_str)
-        print(f"Resample button pressed: Resampling dataset {data_size_str}")
+        print(f"Resample button pressed: Resampling {size_key} dataset.")
 
         if data_size_str == "Select Dataset Size":
             print("Select Dataset Size to resample.")
@@ -108,7 +108,8 @@ class DataPage(Page):
             return
 
         else:
-            dataset_df = load_dataset(sample_from_map_dict.get(size_key))
+            print(f"{sample_from_map_dict.get(size_key)}")
+            dataset_df = get_dataset(sample_from_map_dict.get(size_key))
             sample_dataset(dataset_df, size_key)
             self.draw_figure()
 
@@ -124,8 +125,7 @@ class DataPage(Page):
             print("Select Dataset Size to plot.")
             return
 
-        dataset = load_dataset(size_key)
-        total_scores = calculate_scores(dataset)
+        total_scores = calculate_scores(size_key)
 
         if plot_type == DISTRIBUTIONS_KEY:
             plot_figure = generate_distributions_figure(total_scores)
