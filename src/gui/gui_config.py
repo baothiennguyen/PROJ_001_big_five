@@ -28,14 +28,14 @@ class HomeMenuButton(customtkinter.CTkButton):
         master: any,
         **kwargs,
     ):
-        kwargs.setdefault("height", 40)
-        kwargs.setdefault("width", 200)
+        kwargs.setdefault("height", 80)
+        kwargs.setdefault("width", 500)
         kwargs.setdefault("corner_radius", 20)
         kwargs.setdefault("border_spacing", 20)
         # kwargs.setdefault("fg_color", "transparent")
         # kwargs.setdefault("hover_color", ("gray70", "gray30"))
         # kwargs.setdefault("text_color", ("gray10", "gray90"))
-        kwargs.setdefault("font", customtkinter.CTkFont(size=20, weight="normal"))
+        kwargs.setdefault("font", customtkinter.CTkFont(size=40, weight="normal"))
         # kwargs.setdefault("anchor", "w")
         super().__init__(
             master,
@@ -96,3 +96,19 @@ class Page(customtkinter.CTkFrame):
 
     def get_page_name(self):
         return self.page_name
+
+
+class Frame(customtkinter.CTkFrame):
+    def __init__(
+        self,
+        master: any,
+        frame_name="Frame Name",
+        **kwargs,
+    ):
+        kwargs.setdefault("corner_radius", 0)
+        kwargs.setdefault("fg_color", "transparent")
+        self.frame_name = frame_name
+        super().__init__(
+            master,
+            **kwargs,
+        )

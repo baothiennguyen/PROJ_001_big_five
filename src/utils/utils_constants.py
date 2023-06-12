@@ -63,12 +63,18 @@ DIMENSION_KEY = "dimension"
 ORIENTATION_KEY = "orientation"
 
 # Page Keys
-HOME_PAGE_KEY = "Home"
 DATA_PAGE_KEY = "Data"
-CLUSTERING_PAGE_KEY = "Clustering"
 TEST_PAGE_KEY = "Test"
-RESULTS_PAGE_KEY = "Results"
 ABOUT_PAGE_KEY = "About"
+
+# Frame Keys
+HOME_FRAME_KEY = "Home"
+TAKE_TEST_FRAME_KEY = "Take Test"
+RESULTS_FRAME_KEY = "Results"
+INSTRUCTIONS_FRAME_KEY = "Instructions"
+
+
+CLUSTERING_PAGE_KEY = "Clustering"
 
 # Trait Keys
 AGR_KEY = "Agreeableness"
