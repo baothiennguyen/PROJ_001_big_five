@@ -3,8 +3,9 @@ import customtkinter
 import matplotlib.backends.backend_tkagg as tkagg
 
 from gui.gui_config import Page, HomeMenuButton
-from utils.utils_data import *
 from utils.utils_constants import *
+from utils.utils_data import *
+from utils.utils_figures import *
 
 
 class DataPage(Page):
