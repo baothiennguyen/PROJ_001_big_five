@@ -76,14 +76,18 @@ AGR_KEY = "Agreeableness"
 CSN_KEY = "Conscientiousness"
 OPN_KEY = "Openness"
 
-# Plot Keys
+# Plot Type Keys
 DISTRIBUTIONS_KEY = "Distributions"
 CORRELATIONS_KEY = "Correlations"
 CLUSTERS_KEY = "Clusters"
 
 
-# Numbers
-SAMPLE_SIZE = 100
+# Distributions tab keys
+KDE_KEY = "kde"
+MEAN_KEY = "mean"
+STD_KEY = "std"
+SHOW_STATS_KEY = "show_stats"
+YLIM_CONSTANT_KEY = "ylim_constant"
 
 # Personality test questions
 dimensions_dict = {

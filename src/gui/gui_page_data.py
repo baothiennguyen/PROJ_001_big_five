@@ -35,18 +35,59 @@ class DataPage(Page):
             row=1, column=0, padx=50, pady=(10, 10), sticky="ew"
         )
 
-        # Plot Type Segmented Button
-        self.plottype_segbutton = customtkinter.CTkSegmentedButton(
-            self.sidebar_frame, width=200, values=[DISTRIBUTIONS_KEY, CORRELATIONS_KEY]
-        )
-        self.plottype_segbutton.grid(
-            row=2, column=0, padx=50, pady=(10, 10), sticky="ew"
-        )
+        # Create Plot Type Tab View
+        self.plottype_tabview = customtkinter.CTkTabview(self.sidebar_frame, width=200)
+        # , values=[DISTRIBUTIONS_KEY, CORRELATIONS_KEY]
+        self.plottype_tabview.grid(row=2, column=0, padx=50, pady=(10, 10), sticky="ew")
 
+        # Create Tabs
+        self.plottype_tabview.add(DISTRIBUTIONS_KEY)
+        self.plottype_tabview.tab(DISTRIBUTIONS_KEY).grid_columnconfigure(0, weight=1)
+        self.plottype_tabview.add(CORRELATIONS_KEY)
+        self.plottype_tabview.tab(CORRELATIONS_KEY).grid_columnconfigure(0, weight=1)
+        self.plottype_tabview.add(CLUSTERS_KEY)
+        self.plottype_tabview.tab(CLUSTERS_KEY).grid_columnconfigure(0, weight=1)
+
+        # Create Distributions tab components
+
+        self.checkbox_1 = customtkinter.CTkCheckBox(
+            master=self.plottype_tabview.tab(DISTRIBUTIONS_KEY), text="Show KDE curves"
+        )
+        self.checkbox_1.grid(row=1, column=0, padx=10, pady=(20, 0), sticky="w")
+        self.checkbox_2 = customtkinter.CTkCheckBox(
+            master=self.plottype_tabview.tab(DISTRIBUTIONS_KEY),
+            text="Show distribution means",
+            onvalue=True,
+            offvalue=False,
+        )
+        self.checkbox_2.grid(row=2, column=0, padx=10, pady=(20, 0), sticky="w")
+        self.checkbox_3 = customtkinter.CTkCheckBox(
+            master=self.plottype_tabview.tab(DISTRIBUTIONS_KEY),
+            text="Show standard deviations",
+            onvalue=True,
+            offvalue=False,
+        )
+        self.checkbox_3.grid(row=3, column=0, padx=10, pady=(20, 0), sticky="w")
+        self.checkbox_4 = customtkinter.CTkCheckBox(
+            master=self.plottype_tabview.tab(DISTRIBUTIONS_KEY),
+            text="Show distribution statistics",
+            onvalue=True,
+            offvalue=False,
+        )
+        self.checkbox_4.grid(row=4, column=0, padx=10, pady=(20, 0), sticky="w")
+        self.checkbox_5 = customtkinter.CTkCheckBox(
+            master=self.plottype_tabview.tab(DISTRIBUTIONS_KEY),
+            text="Set constant y-axis limits",
+            onvalue=True,
+            offvalue=False,
+        )
+        self.checkbox_5.grid(row=5, column=0, padx=10, pady=(20, 20), sticky="w")
+
+        # Create Correlations tab components
         # Trait Option Menu
         self.trait_optionmenu = customtkinter.CTkOptionMenu(
-            self.sidebar_frame,
-            width=200,
+            self.plottype_tabview.tab(CORRELATIONS_KEY),
+            # width=200,
             values=[
                 "Select Trait",
                 EXT_KEY,
@@ -56,7 +97,7 @@ class DataPage(Page):
                 OPN_KEY,
             ],
         )
-        self.trait_optionmenu.grid(row=3, column=0, padx=50, pady=(10, 10), sticky="ew")
+        self.trait_optionmenu.grid(row=1, column=0, padx=10, pady=(20, 0), sticky="ew")
 
         # Re-sample button
         self.resample_button = customtkinter.CTkButton(
@@ -70,7 +111,7 @@ class DataPage(Page):
             command=self.resample_dataset,
         )
         self.resample_button.grid(
-            row=11, column=0, padx=(50, 50), pady=25, sticky="sew"
+            row=11, column=0, padx=(50, 50), pady=(0, 50), sticky="sew"
         )
 
         # Plot button
@@ -85,13 +126,14 @@ class DataPage(Page):
             command=self.draw_figure,
         )
         self.plot_button.grid(
-            row=12, column=0, padx=(50, 50), pady=(25, 50), sticky="sew"
+            row=12, column=0, padx=(50, 50), pady=(0, 50), sticky="sew"
         )
 
         # set default values
         self.datasize_optionmenu.set("Select Dataset Size")
-        self.plottype_segbutton.set(DISTRIBUTIONS_KEY)
+        self.plottype_tabview.set(DISTRIBUTIONS_KEY)
         self.trait_optionmenu.set("Select Trait")
+        self.checkbox_1.select()
 
     def resample_dataset(self):
         # get relevant parameters from GUI widgets
@@ -116,7 +158,7 @@ class DataPage(Page):
     def draw_figure(self):
         # get relevant parameters from GUI widgets
         data_size_str = self.datasize_optionmenu.get()
-        plot_type = self.plottype_segbutton.get()
+        plot_type = self.plottype_tabview.get()
         trait_select = self.trait_optionmenu.get()
         size_key = dataset_str_dict.get(data_size_str)
         print(f"Plot button pressed: {data_size_str}, {plot_type}, {trait_select}")
@@ -125,10 +167,16 @@ class DataPage(Page):
             print("Select Dataset Size to plot.")
             return
 
-        total_scores = calculate_scores(size_key)
-
         if plot_type == DISTRIBUTIONS_KEY:
-            plot_figure = generate_distributions_figure(total_scores)
+            total_scores = calculate_scores(size_key)
+            plot_figure = generate_distributions_figure(
+                total_scores,
+                kdes=self.checkbox_1.get(),
+                means=self.checkbox_2.get(),
+                stds=self.checkbox_3.get(),
+                stats=self.checkbox_4.get(),
+                ylims=self.checkbox_5.get(),
+            )
 
         elif plot_type == CORRELATIONS_KEY:
             print("Correlations not yet implemented :(")
