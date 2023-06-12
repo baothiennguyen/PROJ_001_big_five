@@ -16,10 +16,10 @@ MEDIUM_N = 2500
 LARGE_N = 50000
 FULL_N = None
 
-SMALL_STR_KEY = "Small (n = 100 values)"
-MEDIUM_STR_KEY = "Medium (n = 2,500 values)"
-LARGE_STR_KEY = "Large (n = 50,000 values)"
-FULL_STR_KEY = "Full Dataset (n = 1,015,341 values)"
+SMALL_STR_KEY = f"Small  (n = 100 values)"
+MEDIUM_STR_KEY = f"Medium  (n = 2,500 values)"
+LARGE_STR_KEY = f"Large  (n = 50,000 values)"
+FULL_STR_KEY = f"Full Dataset  (n = 1,015,341 values)"
 
 dataset_size_dict = {
     SMALL_KEY: SMALL_N,
@@ -36,11 +36,15 @@ dataset_str_dict = {
 }
 
 
+sample_from_map_dict = {
+    SMALL_KEY: MEDIUM_KEY,
+    MEDIUM_STR_KEY: LARGE_KEY,
+    LARGE_STR_KEY: FULL_KEY,
+}
+
 # Dataset paths
 PROJECT_ROOT = ".project_root"
-FULL_DATASET_PATH = (
-    "data/big-five-personality-test/IPIP-FFM-data-8Nov2018/data-final.csv"
-)
+FULL_DATASET_PATH = "data/IPIP-FFM-data-8Nov2018/data-final.csv"
 SAMPLE_DATASET_PATH = "data/sample_data.csv"
 DATA_DIR = "data/"
 QUESTIONS_JSON_PATH = "data/questions.json"

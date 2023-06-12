@@ -6,6 +6,6 @@ data/sample_dataset**
 
 # directories
 venv/
-data/big-five-personality-test
+data/IPIP-FFM-data-8Nov2018/
 **/__pycache__/
 customtkinter_examples/

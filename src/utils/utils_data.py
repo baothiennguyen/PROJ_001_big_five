@@ -71,9 +71,11 @@ def sample_dataset(
     """
     n_samples = dataset_size_dict.get(size_key)
     sample_dataset_df = dataset_df.sample(n=n_samples)
-    sample_dataset_df.to_csv(dataset_path_dict.get(size_key), index=False)
+
+    dataset_path = dataset_path_dict.get(size_key)
+    sample_dataset_df.to_csv(dataset_path, index=False)
     print(
-        f"Sample dataset with {n_samples} values created successfully! View in {DATA_DIR} directory."
+        f"Sample dataset with {n_samples} values created successfully! View in {dataset_path} directory."
     )
 
 

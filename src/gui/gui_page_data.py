@@ -97,41 +97,46 @@ class DataPage(Page):
         # get relevant parameters from GUI widgets
         data_size_str = self.datasize_optionmenu.get()
         size_key = dataset_str_dict.get(data_size_str)
+        print(f"Resample button pressed: Resampling dataset {data_size_str}")
 
         if data_size_str == "Select Dataset Size":
             print("Select Dataset Size to resample.")
             return
 
-        dataset_df = load_dataset()
-        sample_dataset(dataset_df, size_key)
-        self.draw_figure()
+        elif size_key == FULL_KEY:
+            print("Cannot resample the full dataset.")
+            return
+
+        else:
+            dataset_df = load_dataset(sample_from_map_dict.get(size_key))
+            sample_dataset(dataset_df, size_key)
+            self.draw_figure()
 
     def draw_figure(self):
         # get relevant parameters from GUI widgets
         data_size_str = self.datasize_optionmenu.get()
         plot_type = self.plottype_segbutton.get()
         trait_select = self.trait_optionmenu.get()
-        print(f"button pressed: {data_size_str}, {plot_type}, {trait_select}")
+        size_key = dataset_str_dict.get(data_size_str)
+        print(f"Plot button pressed: {data_size_str}, {plot_type}, {trait_select}")
 
         if data_size_str == "Select Dataset Size":
             print("Select Dataset Size to plot.")
             return
 
-        size_key = dataset_str_dict.get(data_size_str)
         dataset = load_dataset(size_key)
-
         total_scores = calculate_scores(dataset)
 
         if plot_type == DISTRIBUTIONS_KEY:
             plot_figure = generate_distributions_figure(total_scores)
-        else:
+
+        elif plot_type == CORRELATIONS_KEY:
             print("Correlations not yet implemented :(")
-            self.plot_button.configure(text="Plot")
             return
 
         self.canvas = tkagg.FigureCanvasTkAgg(plot_figure, master=self.page_frame)
         self.canvas.draw()
         self.canvas.get_tk_widget().grid(row=0, column=0, sticky="nsew")
 
-        self.plot_button.configure(text="Plot")
-        self.progressbar.stop()
+
+# def get_distribution_fig():
