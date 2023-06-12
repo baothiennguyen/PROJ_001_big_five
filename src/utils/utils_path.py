@@ -1,5 +1,5 @@
 import os
-from utils.utils_constants import PROJECT_ROOT
+from utils.utils_constants import README_MD
 
 
 def get_root_dir():
@@ -11,7 +11,7 @@ def get_root_dir():
     # Traverse upward until the known file or directory is found
     root_dir = None
     while current_dir != "/":
-        if PROJECT_ROOT in os.listdir(current_dir):
+        if README_MD in os.listdir(current_dir):
             root_dir = current_dir
             break
         current_dir = os.path.dirname(current_dir)

@@ -31,14 +31,14 @@ def generate_distributions_figure(
 
     palette = sns.color_palette("bright")
 
-    fig = fig = plt.figure(layout="tight")
+    fig = plt.figure(layout="tight")
     ax_dict = fig.subplot_mosaic(
         [
             [AGR_KEY, AGR_KEY, CSN_KEY, CSN_KEY, OPN_KEY, OPN_KEY],
             [".", EXT_KEY, EXT_KEY, EST_KEY, EST_KEY, "."],
         ],
     )
-    for i, trait_key in enumerate([EXT_KEY, EST_KEY, AGR_KEY, CSN_KEY, OPN_KEY]):
+    for i, trait_key in enumerate(TRAITS_LIST):
         sns.histplot(
             total_scores[trait_key],
             binwidth=1,
@@ -88,3 +88,44 @@ def generate_distributions_figure(
     plt.close()
 
     return fig
+
+
+def generate_correlations_figure(
+    total_scores, vars_bool: list = [True, True, True, True, True]
+):
+    # Create subplots for each trait
+    vars_list = [trait for (trait, v_bool) in zip(TRAITS_LIST, vars_bool) if v_bool]
+
+    sns.set_theme(
+        style="dark",
+        rc={
+            "text.color": "white",
+            "axes.labelcolor": "white",
+            "axes.facecolor": "white",
+            "patch.edgecolor": "lightgrey",
+            "figure.facecolor": "#242424",
+            "xtick.color": "white",
+            "ytick.color": "white",
+        },
+    )
+
+    palette = sns.color_palette("bright")
+
+    # fig = plt.figure(layout="tight")
+    # fig, axis = plt.subplots(1, 1)
+    grid = sns.pairplot(
+        total_scores,
+        x_vars=vars_list,
+        y_vars=vars_list,
+        kind="hist",
+        dropna=True,
+        plot_kws={"binwidth": 1},
+        diag_kws={"binwidth": 1},
+    )
+
+    # grid.map_offdiag(sns.kdeplot, levels=4, color=".2")
+    # grid.map_offdiag(sns.regplot)
+    grid.set(xlim=(0, 40), ylim=(0, 40))
+    plt.tight_layout()
+    plt.close()
+    return grid.figure

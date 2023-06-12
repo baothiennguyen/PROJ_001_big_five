@@ -9,3 +9,4 @@ venv/
 data/IPIP-FFM-data-8Nov2018/
 **/__pycache__/
 customtkinter_examples/
+assets/

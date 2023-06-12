@@ -11,19 +11,21 @@ from gui.gui_config import *
 from gui.gui_page_data import *
 from gui.gui_page_test import *
 from gui.gui_page_about import *
+from utils.utils_path import get_root_dir
 from utils.utils_constants import (
     DATA_PAGE_KEY,
     TEST_PAGE_KEY,
     ABOUT_PAGE_KEY,
 )
 
+root_dir = get_root_dir()
 
-customtkinter.set_appearance_mode(
-    "System"
-)  # Modes: "System" (standard), "Dark", "Light"
-customtkinter.set_default_color_theme(
-    "blue"
-)  # Themes: "blue" (standard), "green", "dark-blue"
+# Modes: "System" (standard), "Dark", "Light"
+customtkinter.set_appearance_mode("Dark")
+
+# Themes: "blue" (standard), "green", "dark-blue"
+# customtkinter.set_default_color_theme(root_dir + "/src/assets/theme.json")
+customtkinter.set_default_color_theme("blue")
 
 
 class App(customtkinter.CTk):
@@ -43,11 +45,8 @@ class App(customtkinter.CTk):
 
         # create menu bar
         menu_bar_items = [
-            # (HOME_PAGE_KEY, self.home_button_event),
             (DATA_PAGE_KEY, self.data_button_event),
-            # (CLUSTERING_PAGE_KEY, self.clustering_button_event),
             (TEST_PAGE_KEY, self.test_button_event),
-            # (RESULTS_PAGE_KEY, self.results_button_event),
             (ABOUT_PAGE_KEY, self.about_button_event),
         ]
         self.menu_bar = MenuBar(self, menu_bar_items, menubar_title=MENUBAR_TITLE)

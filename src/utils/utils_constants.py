@@ -2,7 +2,7 @@
 
 # Titles
 APP_TITLE = "Big Five Personality Traits"
-MENUBAR_TITLE = "Big Five"
+MENUBAR_TITLE = "Big Five Data Visualisation"
 
 # Dataset sizes
 SMALL_KEY = "small"
@@ -43,10 +43,11 @@ sample_from_map_dict = {
 }
 
 # Dataset paths
-PROJECT_ROOT = ".project_root"
+README_MD = "README.md"
 ORIGIN_DATASET_PATH = "data/IPIP-FFM-data-8Nov2018/data-final.csv"
 DATA_DIR = "data/"
 QUESTIONS_JSON_PATH = "data/questions.json"
+THEME_JSON_PATH = "src/assets/theme.json"
 # DATASET_PATH = "data/sample_data.csv"
 
 dataset_path_dict = {
@@ -70,11 +71,13 @@ RESULTS_PAGE_KEY = "Results"
 ABOUT_PAGE_KEY = "About"
 
 # Trait Keys
-EXT_KEY = "Extraversion"
-EST_KEY = "Neuroticism"
 AGR_KEY = "Agreeableness"
 CSN_KEY = "Conscientiousness"
 OPN_KEY = "Openness"
+EXT_KEY = "Extraversion"
+EST_KEY = "Neuroticism"
+
+TRAITS_LIST = [AGR_KEY, CSN_KEY, OPN_KEY, EXT_KEY, EST_KEY]
 
 # Plot Type Keys
 DISTRIBUTIONS_KEY = "Distributions"
