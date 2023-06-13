@@ -5,7 +5,8 @@ A GUI to analyse and visualise data from big five personality test results. For 
 
 
 
-### Install dependencies:
+### Install dependencies
+From the repository root directory, run:
 
 ```
 pip install -r requirements.txt
