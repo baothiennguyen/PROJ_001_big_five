@@ -122,13 +122,14 @@ def calculate_scores(size_key: Union[SMALL_KEY, MEDIUM_KEY, LARGE_KEY]) -> pd.Da
     return total_scores
 
 
+"""
 from kaggle.api.kaggle_api_extended import KaggleApi
 
 
 def get_kaggle_data():
-    """
-    [REDUNDANT] Get original dataset from Kaggle
-    """
+
+    # [REDUNDANT] Get original dataset from Kaggle
+    
     api = KaggleApi()
 
     # Define the dataset ID
@@ -146,3 +147,4 @@ def get_kaggle_data():
     api.dataset_download_files(dataset=dataset_id, path=target_directory, unzip=True)
 
     print("Dataset downloaded successfully!")
+"""
