@@ -1,5 +1,5 @@
 # PROJ_001_big_five
-A GUI to analyse and visualise data from big five personality test results. For context on the Big Five Personality Traits, see [Wikipedia Page](https://en.wikipedia.org/wiki/Big_Five_personality_traits).
+A GUI to analyse and visualise data from big five personality test results. For context on the Big Five Personality Traits, see the [Wikipedia Page](https://en.wikipedia.org/wiki/Big_Five_personality_traits).
 
 ## 1. Set up and Run Program
 
