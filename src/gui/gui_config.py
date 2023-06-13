@@ -2,48 +2,12 @@ from typing import Optional, Tuple, Union
 import customtkinter
 
 
-class NavigationMenuButton(customtkinter.CTkButton):
-    def __init__(
-        self,
-        master: any,
-        **kwargs,
-    ):
-        kwargs.setdefault("height", 40)
-        kwargs.setdefault("corner_radius", 20)
-        kwargs.setdefault("border_spacing", 10)
-        kwargs.setdefault("fg_color", "transparent")
-        kwargs.setdefault("hover_color", ("gray70", "gray30"))
-        kwargs.setdefault("text_color", ("gray10", "gray90"))
-        kwargs.setdefault("font", customtkinter.CTkFont(size=20, weight="normal"))
-        kwargs.setdefault("anchor", "center")
-        super().__init__(
-            master,
-            **kwargs,
-        )
-
-
-class HomeMenuButton(customtkinter.CTkButton):
-    def __init__(
-        self,
-        master: any,
-        **kwargs,
-    ):
-        kwargs.setdefault("height", 80)
-        kwargs.setdefault("width", 500)
-        kwargs.setdefault("corner_radius", 20)
-        kwargs.setdefault("border_spacing", 20)
-        # kwargs.setdefault("fg_color", "transparent")
-        # kwargs.setdefault("hover_color", ("gray70", "gray30"))
-        # kwargs.setdefault("text_color", ("gray10", "gray90"))
-        kwargs.setdefault("font", customtkinter.CTkFont(size=40, weight="normal"))
-        # kwargs.setdefault("anchor", "w")
-        super().__init__(
-            master,
-            **kwargs,
-        )
-
-
 class Page(customtkinter.CTkFrame):
+    """
+    Page class as template for all pages in the application
+    Sets defaults that can easily be adjusted
+    """
+
     def __init__(
         self,
         master: any,
@@ -99,6 +63,11 @@ class Page(customtkinter.CTkFrame):
 
 
 class Frame(customtkinter.CTkFrame):
+    """
+    Frame class as template for all frames in a Page
+    Sets defaults that can easily be adjusted
+    """
+
     def __init__(
         self,
         master: any,
@@ -108,6 +77,57 @@ class Frame(customtkinter.CTkFrame):
         kwargs.setdefault("corner_radius", 0)
         kwargs.setdefault("fg_color", "transparent")
         self.frame_name = frame_name
+        super().__init__(
+            master,
+            **kwargs,
+        )
+
+
+class NavigationMenuButton(customtkinter.CTkButton):
+    """
+    Navigation button class for the Navigation Bar in the Menu Bar
+    Sets defaults that can easily be adjusted
+    """
+
+    def __init__(
+        self,
+        master: any,
+        **kwargs,
+    ):
+        kwargs.setdefault("height", 40)
+        kwargs.setdefault("corner_radius", 20)
+        kwargs.setdefault("border_spacing", 10)
+        kwargs.setdefault("fg_color", "transparent")
+        kwargs.setdefault("hover_color", ("gray70", "gray30"))
+        kwargs.setdefault("text_color", ("gray10", "gray90"))
+        kwargs.setdefault("font", customtkinter.CTkFont(size=20, weight="normal"))
+        kwargs.setdefault("anchor", "center")
+        super().__init__(
+            master,
+            **kwargs,
+        )
+
+
+class MenuButton(customtkinter.CTkButton):
+    """
+    Menu button class for pages with a start page
+    Sets defaults that can easily be adjusted
+    """
+
+    def __init__(
+        self,
+        master: any,
+        **kwargs,
+    ):
+        kwargs.setdefault("height", 80)
+        kwargs.setdefault("width", 500)
+        kwargs.setdefault("corner_radius", 20)
+        kwargs.setdefault("border_spacing", 20)
+        # kwargs.setdefault("fg_color", "transparent")
+        # kwargs.setdefault("hover_color", ("gray70", "gray30"))
+        # kwargs.setdefault("text_color", ("gray10", "gray90"))
+        kwargs.setdefault("font", customtkinter.CTkFont(size=40, weight="normal"))
+        # kwargs.setdefault("anchor", "w")
         super().__init__(
             master,
             **kwargs,

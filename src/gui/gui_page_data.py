@@ -9,6 +9,10 @@ from utils.utils_figures import *
 
 
 class DataPage(Page):
+    """
+    Data Analysis Page class
+    """
+
     def __init__(self, master: any, **kwargs):
         kwargs.setdefault("page_name", DATA_PAGE_KEY)
         super().__init__(master, **kwargs)

@@ -3,9 +3,9 @@ from utils.utils_constants import README_MD
 
 
 def get_root_dir():
-    # Identify a known file or directory in the root directory
-
-    # Get the current directory of the script
+    """
+    Helper function to get the root directory's absolute path from any file in the repository
+    """
     current_dir = os.path.dirname(os.path.abspath(__file__))
 
     # Traverse upward until the known file or directory is found

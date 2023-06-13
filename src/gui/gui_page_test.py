@@ -9,6 +9,10 @@ from utils.utils_figures import *
 
 
 class TestPage(Page):
+    """
+    Test Page class
+    """
+
     def __init__(self, master: any, **kwargs):
         kwargs.setdefault("page_name", TEST_PAGE_KEY)
         super().__init__(master, **kwargs)
@@ -58,6 +62,10 @@ class TestPage(Page):
 
 
 class HomeFrame(Frame):
+    """
+    Home Frame for the Test Page
+    """
+
     def __init__(self, master: any, menu_items: list[tuple[str, Callable]], **kwargs):
         kwargs.setdefault("frame_name", HOME_FRAME_KEY)
         super().__init__(master, **kwargs)
@@ -65,12 +73,12 @@ class HomeFrame(Frame):
         self.grid_rowconfigure((0, 3), weight=1)
         # self.grid_rowconfigure(len(menu_items), weight=2)
         self.grid_columnconfigure((0, 3), weight=1)
-        self.menu_buttons: dict[str, HomeMenuButton] = {}
+        self.menu_buttons: dict[str, MenuButton] = {}
         menu_button_map = [(1, 1), (2, 1)]
 
         for i, (item_str, item_command) in enumerate(menu_items):
             row_i, col_i = menu_button_map[i]
-            menu_button = HomeMenuButton(
+            menu_button = MenuButton(
                 self,
                 text=item_str,
                 command=item_command,
@@ -89,6 +97,10 @@ class HomeFrame(Frame):
 
 
 class ResultsFrame(Frame):
+    """
+    Results Frame for the Test Page
+    """
+
     def __init__(self, master: any, **kwargs):
         kwargs.setdefault("frame_name", RESULTS_FRAME_KEY)
         super().__init__(master, **kwargs)
@@ -101,6 +113,10 @@ class ResultsFrame(Frame):
 
 
 class TestFrame(Frame):
+    """
+    Test Frame for the Test Page
+    """
+
     def __init__(self, master: any, **kwargs):
         kwargs.setdefault("frame_name", TAKE_TEST_FRAME_KEY)
         super().__init__(master, **kwargs)
@@ -121,6 +137,10 @@ class TestFrame(Frame):
 
 
 class InstructionsFrame(Frame):
+    """
+    Instructions Frame for the Test Page
+    """
+
     def __init__(self, master: any, **kwargs):
         kwargs.setdefault("frame_name", INSTRUCTIONS_FRAME_KEY)
         super().__init__(master, **kwargs)

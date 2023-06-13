@@ -29,6 +29,11 @@ customtkinter.set_default_color_theme("blue")
 
 
 class App(customtkinter.CTk):
+    """
+    Main application class for the GUI
+    Set up the GUI and its core components
+    """
+
     def __init__(self):
         self.current_page: Page = None
         super().__init__()
@@ -92,6 +97,11 @@ class App(customtkinter.CTk):
 
 
 class MenuBar(customtkinter.CTkFrame):
+    """
+    Menu Bar class for the GUI
+    Set up the Applcation's main title and the navigation bar
+    """
+
     def __init__(
         self,
         master: any,

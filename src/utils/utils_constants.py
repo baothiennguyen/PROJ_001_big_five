@@ -1,20 +1,25 @@
 # utils_constants.py
+"""
+Numerical constants and strings for dictionary keys and paths
+"""
 
 # Titles
 APP_TITLE = "Big Five Personality Traits"
 MENUBAR_TITLE = "Big Five Data Visualisation"
 
-# Dataset sizes
+# Dataset size keys
 SMALL_KEY = "small"
 MEDIUM_KEY = "medium"
 LARGE_KEY = "large"
 FULL_KEY = "full"
 
-
+# Dataset sizes
 SMALL_N = 100
 MEDIUM_N = 2500
 LARGE_N = 50000
 FULL_N = None
+
+NORM_FACTOR = 100 / 40
 
 SMALL_STR_KEY = f"Small  (n = 100 values)"
 MEDIUM_STR_KEY = f"Medium  (n = 2,500 values)"

@@ -14,7 +14,18 @@ def generate_distributions_figure(
     stats: Literal[True, False] = True,
     ylims: Literal[True, False] = True,
 ):
-    # Create subplots for each trait
+    """
+    Creates Distributions figure
+    Parameters:
+    - total_scores:     dataframe of total scores to by plotted
+
+    Configuration Parameters
+    - kdes:             bool for showing the kernel density estimate (KDE) for each plot
+    - means:            bool for showing the distribution's mean for each plot
+    - stds:             bool for showing the distribution's standard deviation for each plot
+    - stats:            bool for showing the distribution's numerical values for mean and standard deviation for each plot
+    - ylims:            bool for setting each plot to have the same y-axis
+    """
 
     sns.set_theme(
         style="dark",
@@ -41,13 +52,13 @@ def generate_distributions_figure(
     for i, trait_key in enumerate(TRAITS_LIST):
         sns.histplot(
             total_scores[trait_key],
-            binwidth=1,
+            binwidth=NORM_FACTOR,
             kde=kdes,
-            kde_kws={"bw_adjust": 2, "clip": (0, 40)},
+            kde_kws={"bw_adjust": 2, "clip": (0, 100)},
             ax=ax_dict[trait_key],
             color=palette[i],
         )
-        ax_dict[trait_key].set(xlim=(0, 40))
+        ax_dict[trait_key].set(xlim=(0, 100))
         ax_dict[trait_key].set_title(
             f"Distribution of {trait_key}", fontdict={"fontsize": 18}
         )
@@ -93,7 +104,14 @@ def generate_distributions_figure(
 def generate_correlations_figure(
     total_scores, vars_bool: list = [True, True, True, True, True]
 ):
-    # Create subplots for each trait
+    """
+    Creates Correlations figure
+    Parameters:
+    - total_scores:     dataframe of total scores to by plotted
+
+    Configuration Parameters
+    - vars_bool:        list of bools corresponding to each of the traits to show
+    """
     vars_list = [trait for (trait, v_bool) in zip(TRAITS_LIST, vars_bool) if v_bool]
 
     sns.set_theme(
@@ -119,13 +137,13 @@ def generate_correlations_figure(
         y_vars=vars_list,
         kind="hist",
         dropna=True,
-        plot_kws={"binwidth": 1},
-        diag_kws={"binwidth": 1},
+        plot_kws={"binwidth": NORM_FACTOR},
+        diag_kws={"binwidth": NORM_FACTOR},
     )
 
     # grid.map_offdiag(sns.kdeplot, levels=4, color=".2")
     # grid.map_offdiag(sns.regplot)
-    grid.set(xlim=(0, 40), ylim=(0, 40))
+    grid.set(xlim=(0, 100), ylim=(0, 100))
     plt.tight_layout()
     plt.close()
     return grid.figure

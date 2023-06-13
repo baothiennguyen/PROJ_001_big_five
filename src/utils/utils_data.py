@@ -12,7 +12,9 @@ from kaggle.api.kaggle_api_extended import KaggleApi
 
 
 def get_kaggle_data():
-    # Initialize the Kaggle API
+    """
+    [REDUNDANT] Get original dataset from Kaggle
+    """
     api = KaggleApi()
 
     # Define the dataset ID
@@ -35,6 +37,13 @@ def get_kaggle_data():
 def process_dataset(
     dataset_path=ORIGINAL_DATASET_PATH, questions_json_path=QUESTIONS_JSON_PATH
 ):
+    """
+    Process original dataset:
+    - Drop irrelevant columns
+    - Format missing values
+    - Reverse scores for negatively-oriented questions
+    - Saves resulting dataframe as csv
+    """
     try:
         assert os.path.exists(dataset_path)
     except:
@@ -77,16 +86,16 @@ def get_dataset(
     size_key: Union[SMALL_KEY, MEDIUM_KEY, LARGE_KEY, FULL_KEY],
 ) -> pd.DataFrame:
     """
-    Load datasets of different sizes
+    Load and return dataset of specified sizes
     """
     dataset_path = dataset_path_dict.get(size_key)
-    dataset_df = pd.read_csv(dataset_path)  # .astype(float)
+    dataset_df = pd.read_csv(dataset_path)
     return dataset_df
 
 
 def sample_datasets_all():
     """
-    Load full dataset and create sample dataset files
+    Process original dataset and create sample dataset files
     """
     process_dataset()
     dataset_df = get_dataset(FULL_KEY).astype("Int8")
@@ -99,7 +108,7 @@ def sample_dataset(
     size_key: Union[SMALL_KEY, MEDIUM_KEY, LARGE_KEY],
 ):
     """
-    Load full dataset and create sample dataset files
+    Loads the next largest dataset file and re-samples, overwrites the exisitng dataset
     """
     n_samples = dataset_size_dict.get(size_key)
     sample_dataset_df = dataset_df.sample(n=n_samples).astype("Int8")
@@ -112,6 +121,9 @@ def sample_dataset(
 
 
 def make_questions_json(outpath=QUESTIONS_JSON_PATH):
+    """
+    Creates json file to combine all components of questions
+    """
     questions_dict = {}
     for prompt_key in prompts_dict:
         questions_dict[prompt_key] = {
@@ -127,8 +139,8 @@ def make_questions_json(outpath=QUESTIONS_JSON_PATH):
 
 def calculate_scores(size_key: Union[SMALL_KEY, MEDIUM_KEY, LARGE_KEY]) -> pd.DataFrame:
     """
-    Return scores for datset of input size
+    Returns normalised scores for datset of input size
     """
     dataset_df = get_dataset(size_key)
-    total_scores = dataset_df.groupby(dimensions_dict, axis=1).sum()
+    total_scores = dataset_df.groupby(dimensions_dict, axis=1).sum().mul(NORM_FACTOR)
     return total_scores

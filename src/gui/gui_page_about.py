@@ -7,6 +7,11 @@ from utils.utils_constants import *
 
 
 class AboutPage(Page):
+    """
+    About Page class
+    To be implemented.
+    """
+
     def __init__(self, master: any, **kwargs):
         kwargs.setdefault("page_name", ABOUT_PAGE_KEY)
         super().__init__(master, **kwargs)
