@@ -14,7 +14,10 @@ pip install -r requirements.txt
 
 ### Get Dataset (Optional)
 
-The data files needed to run the program can be found in `data/`. If you would like to get the original dataset, you can [set up your Kaggle credentials](https://github.com/Kaggle/kaggle-api#api-credentials), then run command:
+The data files needed to run the program can be found in `data/`. If you would like to get the original dataset, you can [set up your Kaggle credentials](https://github.com/Kaggle/kaggle-api#api-credentials), then run commands:
+```
+pip install kaggle
+```
 ```
 kaggle datasets download -d tunguz/big-five-personality-test -p ./data --unzip
 ```
