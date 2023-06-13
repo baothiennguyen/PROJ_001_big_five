@@ -8,30 +8,6 @@ from typing import Literal, Union
 from utils.utils_constants import *
 
 from utils.utils_path import get_root_dir
-from kaggle.api.kaggle_api_extended import KaggleApi
-
-
-def get_kaggle_data():
-    """
-    [REDUNDANT] Get original dataset from Kaggle
-    """
-    api = KaggleApi()
-
-    # Define the dataset ID
-    dataset_id = "tunguz/big-five-personality-test"
-
-    # Define the target directory to save the downloaded dataset
-    target_directory = os.path.join(get_root_dir(), "data")
-
-    # Create the target directory if it doesn't exist
-    os.makedirs(target_directory, exist_ok=True)
-
-    print(target_directory)
-
-    # Download the dataset
-    api.dataset_download_files(dataset=dataset_id, path=target_directory, unzip=True)
-
-    print("Dataset downloaded successfully!")
 
 
 def process_dataset(
@@ -144,3 +120,29 @@ def calculate_scores(size_key: Union[SMALL_KEY, MEDIUM_KEY, LARGE_KEY]) -> pd.Da
     dataset_df = get_dataset(size_key)
     total_scores = dataset_df.groupby(dimensions_dict, axis=1).sum().mul(NORM_FACTOR)
     return total_scores
+
+
+from kaggle.api.kaggle_api_extended import KaggleApi
+
+
+def get_kaggle_data():
+    """
+    [REDUNDANT] Get original dataset from Kaggle
+    """
+    api = KaggleApi()
+
+    # Define the dataset ID
+    dataset_id = "tunguz/big-five-personality-test"
+
+    # Define the target directory to save the downloaded dataset
+    target_directory = os.path.join(get_root_dir(), "data")
+
+    # Create the target directory if it doesn't exist
+    os.makedirs(target_directory, exist_ok=True)
+
+    print(target_directory)
+
+    # Download the dataset
+    api.dataset_download_files(dataset=dataset_id, path=target_directory, unzip=True)
+
+    print("Dataset downloaded successfully!")

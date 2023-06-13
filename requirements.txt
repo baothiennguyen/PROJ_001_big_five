@@ -9,7 +9,7 @@ fonttools==4.39.4
 idna==3.4
 imageio==2.30.0
 joblib==1.2.0
-# kaggle==1.5.13
+kaggle==1.5.13
 kiwisolver==1.4.4
 lazy_loader==0.2
 matplotlib==3.7.1
