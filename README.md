@@ -73,8 +73,14 @@ Here's a run down of features, strikethrough features are implemented:
 
 ## 3. Screenshots
 
-### 3.1 Home Menu
-![Screenshot](images/Screenshot_2023-06-08_1.png)
+### 3.1 Landing page on opening
+![Screenshot](images/Screenshot_2023-06-13_1.png)
 
-### 3.2 Data Analysis Page
-![Screenshot](images/Screenshot_2023-06-08_2.png)
+### 3.2 Data Analysis Page: Trait distributions
+![Screenshot](images/Screenshot_2023-06-13_2.png)
+
+### 3.3 Data Analysis Page: Trait correlations
+![Screenshot](images/Screenshot_2023-06-13_3.png)
+
+### 3.4 Test Page: Opening Page
+![Screenshot](images/Screenshot_2023-06-13_4.png)
