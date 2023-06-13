@@ -44,7 +44,10 @@ sample_from_map_dict = {
 
 # Dataset paths
 README_MD = "README.md"
-ORIGIN_DATASET_PATH = "data/IPIP-FFM-data-8Nov2018/data-final.csv"
+ORIGINAL_DATASET_PATH = "data/IPIP-FFM-data-8Nov2018/data-final.csv"
+ORIGINAL_DATASET_URL = (
+    "https://www.kaggle.com/datasets/tunguz/big-five-personality-test"
+)
 DATA_DIR = "data/"
 QUESTIONS_JSON_PATH = "data/questions.json"
 THEME_JSON_PATH = "src/assets/theme.json"

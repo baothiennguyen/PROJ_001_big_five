@@ -5,49 +5,23 @@ A GUI to analyse and visualise data from big five personality test results. For 
 
 
 
-### 1.1. Create Environment:
-
-```
-python3 -m venv venv
-```
-
-Activate environment:
-
--  For macOS/Linux:
-
-    ```
-    source venv/bin/activate
-    ```
-
--  For Windows:
-
-    ```
-    source venv\Scripts\activate
-    ```
-
--  For Visual Studio Code in Windows:
-
-    ```
-    source venv/Scripts/activate
-    ```
-
-Install dependencies:
+### Install dependencies:
 
 ```
 pip install -r requirements.txt
 ```
 
-### 1.2. Get Dataset
+### Get Dataset (Optional)
 
-To get dataset, run command:
+The data files needed to run the program can be found in `data/`. If you would like to get the original dataset, you can [set up your Kaggle credentials](https://github.com/Kaggle/kaggle-api#api-credentials), then run command:
 ```
-kaggle datasets download -d tunguz/big-five-personality-test
+kaggle datasets download -d tunguz/big-five-personality-test -p ./data --unzip
 ```
 
 Alternatively, download manually from Kaggle via [this link](https://www.kaggle.com/datasets/tunguz/big-five-personality-test/download?datasetVersionNumber=1), and extract contents into `data/` directory.
 
-### 1.3. Run Program
-From the `PROJ_001_big_five/` directory, run:
+### Run Program
+From the root directory, run:
 
 ```
 python ./src/main.py
@@ -67,17 +41,16 @@ Here's a run down of features, strikethrough features are implemented:
 
     2.1 ~~Distributions - basic histogram of each personality trait to view the distribution of the dataset~~
 
-    2.2 Correlations - visualise correlations between a selected trait and the remaining 4
+    2.2 ~~Correlations - visualise correlations between a selected trait and the remaining 4~~
 
-    2.3 Correlation heatmap - visual summary of the corelations between each one of the 5 traits with each other
 
 3. Clustering - use basic clustering algorithms to extract major personality profiles
 
-    3.1 Density-based algorithm (DBSCAN)
+    3.1 K-means clustering
 
-    3.2 Hierarchical-based
+    3.2 Density-based algorithm (DBSCAN)
 
-    3.3 K-means clustering
+    3.3 Hierarchical-based
 
     3.4 Gaussian Mixture Model
 
@@ -87,7 +60,7 @@ Here's a run down of features, strikethrough features are implemented:
 
     4.1 Take your own personality test using the same questions asked in the dataset
 
-    4.2 Display results as radar plot and as percentiles for each trait with respect to the dataset
+    4.2 Visualise results each trait with respect to the dataset
 
 5. GUI Features
 

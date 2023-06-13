@@ -33,8 +33,16 @@ def get_kaggle_data():
 
 
 def process_dataset(
-    dataset_path=ORIGIN_DATASET_PATH, questions_json_path=QUESTIONS_JSON_PATH
+    dataset_path=ORIGINAL_DATASET_PATH, questions_json_path=QUESTIONS_JSON_PATH
 ):
+    try:
+        assert os.path.exists(dataset_path)
+    except:
+        raise Exception(
+            f"Original dataset not found in {dataset_path}."
+            + f"Download dataset from Kaggle at {ORIGINAL_DATASET_URL}"
+            + f"and place extract the contents into {DATA_DIR}."
+        )
     dataset_df = pd.read_csv(dataset_path, sep="\t")
 
     # Drop non-question columns, replace 0 values, convert to
