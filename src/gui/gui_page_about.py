@@ -2,7 +2,7 @@ from typing import Callable
 import customtkinter
 import matplotlib.backends.backend_tkagg as tkagg
 
-from gui.gui_config import Page, HomeMenuButton
+from gui.gui_config import *
 from utils.utils_constants import *
 
 
