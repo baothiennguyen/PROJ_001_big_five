@@ -1,10 +1,12 @@
 import os
+
 from utils.utils_constants import README_MD
 
 
 def get_root_dir():
     """
-    Helper function to get the root directory's absolute path from any file in the repository
+    Helper function to get the root directory's
+    absolute path from any file in the repository
     """
     current_dir = os.path.dirname(os.path.abspath(__file__))
 

@@ -1,22 +1,19 @@
-from typing import Callable, Optional, Tuple, Union
-import tkinter
+from typing import Callable
+
 import customtkinter
+
+import utils.utils_constants as constants
+from gui.gui_config import NavigationMenuButton, Page
+from gui.gui_page_about import AboutPage
+from gui.gui_page_data import DataPage
+from gui.gui_page_test import TestPage
+from utils.utils_path import get_root_dir
 
 # from customtkinter.windows.widgets.font import CTkFont
 # from customtkinter.windows.widgets.image import CTkImage
 # import matplotlib.pyplot as plt
 # import matplotlib.backends.backend_tkagg as tkagg
 
-from gui.gui_config import *
-from gui.gui_page_data import *
-from gui.gui_page_test import *
-from gui.gui_page_about import *
-from utils.utils_path import get_root_dir
-from utils.utils_constants import (
-    DATA_PAGE_KEY,
-    TEST_PAGE_KEY,
-    ABOUT_PAGE_KEY,
-)
 
 root_dir = get_root_dir()
 
@@ -39,7 +36,7 @@ class App(customtkinter.CTk):
         super().__init__()
 
         # configure window
-        self.title(APP_TITLE)
+        self.title(constants.APP_TITLE)
         self.geometry(f"{1920}x{1080}")
 
         # configure grid layout (2x1)
@@ -50,22 +47,24 @@ class App(customtkinter.CTk):
 
         # create menu bar
         menu_bar_items = [
-            (DATA_PAGE_KEY, self.data_button_event),
-            (TEST_PAGE_KEY, self.test_button_event),
-            (ABOUT_PAGE_KEY, self.about_button_event),
+            (constants.DATA_PAGE_KEY, self.data_button_event),
+            (constants.TEST_PAGE_KEY, self.test_button_event),
+            (constants.ABOUT_PAGE_KEY, self.about_button_event),
         ]
-        self.menu_bar = MenuBar(self, menu_bar_items, menubar_title=MENUBAR_TITLE)
+        self.menu_bar = MenuBar(
+            self, menu_bar_items, menubar_title=constants.MENUBAR_TITLE
+        )
         self.menu_bar.grid(row=0, column=0, sticky="nsew")
 
         # create pages
         self.pages: dict[str, Page] = {
-            DATA_PAGE_KEY: DataPage(self),
-            TEST_PAGE_KEY: TestPage(self),
-            ABOUT_PAGE_KEY: AboutPage(self),
+            constants.DATA_PAGE_KEY: DataPage(self),
+            constants.TEST_PAGE_KEY: TestPage(self),
+            constants.ABOUT_PAGE_KEY: AboutPage(self),
         }
 
         # select default frame
-        self.select_page(DATA_PAGE_KEY)
+        self.select_page(constants.DATA_PAGE_KEY)
 
     def get_page(self, page_name):
         return self.pages.get(page_name)
@@ -87,13 +86,13 @@ class App(customtkinter.CTk):
         self.current_page = self.get_page(page_name)
 
     def data_button_event(self):
-        self.select_page(DATA_PAGE_KEY)
+        self.select_page(constants.DATA_PAGE_KEY)
 
     def test_button_event(self):
-        self.select_page(TEST_PAGE_KEY)
+        self.select_page(constants.TEST_PAGE_KEY)
 
     def about_button_event(self):
-        self.select_page(ABOUT_PAGE_KEY)
+        self.select_page(constants.ABOUT_PAGE_KEY)
 
 
 class MenuBar(customtkinter.CTkFrame):

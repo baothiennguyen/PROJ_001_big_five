@@ -1,11 +1,9 @@
 from typing import Callable
-import customtkinter
-import matplotlib.backends.backend_tkagg as tkagg
 
-from gui.gui_config import *
-from utils.utils_constants import *
-from utils.utils_data import *
-from utils.utils_figures import *
+import customtkinter
+
+import utils.utils_constants as constants
+from gui.gui_config import Frame, MenuButton, Page
 
 
 class TestPage(Page):
@@ -14,7 +12,7 @@ class TestPage(Page):
     """
 
     def __init__(self, master: any, **kwargs):
-        kwargs.setdefault("page_name", TEST_PAGE_KEY)
+        kwargs.setdefault("page_name", constants.TEST_PAGE_KEY)
         super().__init__(master, **kwargs)
 
         self.page_frame.grid_rowconfigure(0, weight=1)
@@ -23,17 +21,17 @@ class TestPage(Page):
         self.sidebar_frame.grid_columnconfigure(0, weight=1)
 
         menu_items = [
-            (TAKE_TEST_FRAME_KEY, self.take_test_button_event),
-            (RESULTS_FRAME_KEY, self.see_results_button_event),
+            (constants.TAKE_TEST_FRAME_KEY, self.take_test_button_event),
+            (constants.RESULTS_FRAME_KEY, self.see_results_button_event),
         ]
 
         self.frames: dict[str, Frame] = {
-            HOME_FRAME_KEY: HomeFrame(self.page_frame, menu_items=menu_items),
-            TAKE_TEST_FRAME_KEY: TestFrame(self.page_frame),
-            RESULTS_FRAME_KEY: ResultsFrame(self.page_frame),
+            constants.HOME_FRAME_KEY: HomeFrame(self.page_frame, menu_items=menu_items),
+            constants.TAKE_TEST_FRAME_KEY: TestFrame(self.page_frame),
+            constants.RESULTS_FRAME_KEY: ResultsFrame(self.page_frame),
         }
 
-        self.select_frame(HOME_FRAME_KEY)
+        self.select_frame(constants.HOME_FRAME_KEY)
 
     def get_frame(self, frame_name):
         return self.frames.get(frame_name)
@@ -55,10 +53,10 @@ class TestPage(Page):
         self.current_frame = self.get_frame(frame_name)
 
     def take_test_button_event(self):
-        self.select_frame(TAKE_TEST_FRAME_KEY)
+        self.select_frame(constants.TAKE_TEST_FRAME_KEY)
 
     def see_results_button_event(self):
-        self.select_frame(RESULTS_FRAME_KEY)
+        self.select_frame(constants.RESULTS_FRAME_KEY)
 
 
 class HomeFrame(Frame):
@@ -67,7 +65,7 @@ class HomeFrame(Frame):
     """
 
     def __init__(self, master: any, menu_items: list[tuple[str, Callable]], **kwargs):
-        kwargs.setdefault("frame_name", HOME_FRAME_KEY)
+        kwargs.setdefault("frame_name", constants.HOME_FRAME_KEY)
         super().__init__(master, **kwargs)
 
         self.grid_rowconfigure((0, 3), weight=1)
@@ -91,7 +89,7 @@ class HomeFrame(Frame):
             menu_button.grid(row=row_i, column=col_i, padx=20, pady=20, sticky="ew")
             self.menu_buttons[item_str] = menu_button
 
-        self.menu_buttons[RESULTS_FRAME_KEY].configure(
+        self.menu_buttons[constants.RESULTS_FRAME_KEY].configure(
             state="disabled", fg_color="#144870"
         )
 
@@ -102,7 +100,7 @@ class ResultsFrame(Frame):
     """
 
     def __init__(self, master: any, **kwargs):
-        kwargs.setdefault("frame_name", RESULTS_FRAME_KEY)
+        kwargs.setdefault("frame_name", constants.RESULTS_FRAME_KEY)
         super().__init__(master, **kwargs)
 
         self.grid_rowconfigure(0, weight=1)
@@ -118,7 +116,7 @@ class TestFrame(Frame):
     """
 
     def __init__(self, master: any, **kwargs):
-        kwargs.setdefault("frame_name", TAKE_TEST_FRAME_KEY)
+        kwargs.setdefault("frame_name", constants.TAKE_TEST_FRAME_KEY)
         super().__init__(master, **kwargs)
 
         self.grid_rowconfigure(0, weight=1)
@@ -142,7 +140,7 @@ class InstructionsFrame(Frame):
     """
 
     def __init__(self, master: any, **kwargs):
-        kwargs.setdefault("frame_name", INSTRUCTIONS_FRAME_KEY)
+        kwargs.setdefault("frame_name", constants.INSTRUCTIONS_FRAME_KEY)
         super().__init__(master, **kwargs)
 
         self.grid_rowconfigure(0, weight=1)

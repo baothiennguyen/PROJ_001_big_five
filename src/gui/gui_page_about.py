@@ -1,9 +1,9 @@
-from typing import Callable
-import customtkinter
-import matplotlib.backends.backend_tkagg as tkagg
+# from typing import Callable
+# import customtkinter
+# import matplotlib.backends.backend_tkagg as tkagg
 
-from gui.gui_config import *
-from utils.utils_constants import *
+import utils.utils_constants as constants
+from gui.gui_config import Page
 
 
 class AboutPage(Page):
@@ -13,7 +13,7 @@ class AboutPage(Page):
     """
 
     def __init__(self, master: any, **kwargs):
-        kwargs.setdefault("page_name", ABOUT_PAGE_KEY)
+        kwargs.setdefault("page_name", constants.ABOUT_PAGE_KEY)
         super().__init__(master, **kwargs)
 
         self.page_frame.grid_rowconfigure(0, weight=1)
@@ -47,7 +47,7 @@ class HomePage(Page):
             else:
                 menu_button.grid(row=row_i, column=col_i, padx=20, pady=20, sticky="ew")
             self.menu_buttons[item_str] = menu_button
-            
+
 
 class ResultsPage(Page):
     def __init__(self, master: any, **kwargs):

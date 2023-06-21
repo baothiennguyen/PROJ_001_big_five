@@ -1,9 +1,10 @@
+from typing import Literal
+
+import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
-import matplotlib.pyplot as plt
-from typing import Literal
-from utils.utils_constants import *
-from utils.utils_data import *
+
+import utils.utils_constants as constants
 
 
 def generate_distributions_figure(
@@ -20,11 +21,13 @@ def generate_distributions_figure(
     - total_scores:     dataframe of total scores to by plotted
 
     Configuration Parameters
-    - kdes:             bool for showing the kernel density estimate (KDE) for each plot
-    - means:            bool for showing the distribution's mean for each plot
-    - stds:             bool for showing the distribution's standard deviation for each plot
-    - stats:            bool for showing the distribution's numerical values for mean and standard deviation for each plot
-    - ylims:            bool for setting each plot to have the same y-axis
+    - kdes:     bool for showing the kernel density estimate (KDE) for each plot
+    - means:    bool for showing the distribution's mean for each plot
+    - stds:     bool for showing the distribution's standard deviation for each
+                plot
+    - stats:    bool for showing the distribution's numerical values for mean
+                and standard deviation for each plot
+    - ylims:    bool for setting each plot to have the same y-axis
     """
 
     sns.set_theme(
@@ -45,14 +48,28 @@ def generate_distributions_figure(
     fig = plt.figure(layout="tight")
     ax_dict = fig.subplot_mosaic(
         [
-            [AGR_KEY, AGR_KEY, CSN_KEY, CSN_KEY, OPN_KEY, OPN_KEY],
-            [".", EXT_KEY, EXT_KEY, EST_KEY, EST_KEY, "."],
+            [
+                constants.AGR_KEY,
+                constants.AGR_KEY,
+                constants.CSN_KEY,
+                constants.CSN_KEY,
+                constants.OPN_KEY,
+                constants.OPN_KEY,
+            ],
+            [
+                ".",
+                constants.EXT_KEY,
+                constants.EXT_KEY,
+                constants.EST_KEY,
+                constants.EST_KEY,
+                ".",
+            ],
         ],
     )
-    for i, trait_key in enumerate(TRAITS_LIST):
+    for i, trait_key in enumerate(constants.TRAITS_LIST):
         sns.histplot(
             total_scores[trait_key],
-            binwidth=NORM_FACTOR,
+            binwidth=constants.NORM_FACTOR,
             kde=kdes,
             kde_kws={"bw_adjust": 2, "clip": (0, 100)},
             ax=ax_dict[trait_key],
@@ -91,7 +108,8 @@ def generate_distributions_figure(
             ax_dict[trait_key].text(
                 x_text,
                 max_y / 50,
-                f"Mean Score = {np.round(mean, 2)},   Standard Deviation = {np.round(std, 2)}",
+                f"Mean Score = {np.round(mean, 2)},   "
+                + f"Standard Deviation = {np.round(std, 2)}",
             )
         if ylims:
             ax_dict[trait_key].set(ylim=(0, max_y))
@@ -112,7 +130,9 @@ def generate_correlations_figure(
     Configuration Parameters
     - vars_bool:        list of bools corresponding to each of the traits to show
     """
-    vars_list = [trait for (trait, v_bool) in zip(TRAITS_LIST, vars_bool) if v_bool]
+    vars_list = [
+        trait for (trait, v_bool) in zip(constants.TRAITS_LIST, vars_bool) if v_bool
+    ]
 
     sns.set_theme(
         style="dark",
@@ -127,7 +147,7 @@ def generate_correlations_figure(
         },
     )
 
-    palette = sns.color_palette("bright")
+    # palette = sns.color_palette("bright")
 
     # fig = plt.figure(layout="tight")
     # fig, axis = plt.subplots(1, 1)
@@ -137,8 +157,8 @@ def generate_correlations_figure(
         y_vars=vars_list,
         kind="hist",
         dropna=True,
-        plot_kws={"binwidth": NORM_FACTOR},
-        diag_kws={"binwidth": NORM_FACTOR},
+        plot_kws={"binwidth": constants.NORM_FACTOR},
+        diag_kws={"binwidth": constants.NORM_FACTOR},
     )
 
     # grid.map_offdiag(sns.kdeplot, levels=4, color=".2")

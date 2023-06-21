@@ -21,10 +21,10 @@ FULL_N = None
 
 NORM_FACTOR = 100 / 40
 
-SMALL_STR_KEY = f"Small  (n = 100 values)"
-MEDIUM_STR_KEY = f"Medium  (n = 2,500 values)"
-LARGE_STR_KEY = f"Large  (n = 50,000 values)"
-FULL_STR_KEY = f"Full Dataset  (n = 1,015,341 values)"
+SMALL_STR_KEY = "Small  (n = 100 values)"
+MEDIUM_STR_KEY = "Medium  (n = 2,500 values)"
+LARGE_STR_KEY = "Large  (n = 50,000 values)"
+FULL_STR_KEY = "Full Dataset  (n = 1,015,341 values)"
 
 dataset_size_dict = {
     SMALL_KEY: SMALL_N,
@@ -62,7 +62,7 @@ dataset_path_dict = {
     SMALL_KEY: DATA_DIR + f"dataset_sample_{SMALL_N}.csv",
     MEDIUM_KEY: DATA_DIR + f"dataset_sample_{MEDIUM_N}.csv",
     LARGE_KEY: DATA_DIR + f"dataset_sample_{LARGE_N}.csv",
-    FULL_KEY: DATA_DIR + f"dataset_full.csv",
+    FULL_KEY: DATA_DIR + "dataset_full.csv",
 }
 
 # Keys

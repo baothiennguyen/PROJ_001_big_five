@@ -1,14 +1,20 @@
 import os
+
+import utils.utils_constants as constants
 from gui.gui_app import App
-from utils.utils_constants import *
-from utils.utils_data import *
+from utils.utils_data import sample_datasets_all
 
 
 def main():
     if any(
         [
-            not os.path.exists(dataset_path_dict.get(key))
-            for key in [SMALL_KEY, MEDIUM_KEY, LARGE_KEY, FULL_KEY]
+            not os.path.exists(constants.dataset_path_dict.get(key))
+            for key in [
+                constants.SMALL_KEY,
+                constants.MEDIUM_KEY,
+                constants.LARGE_KEY,
+                constants.FULL_KEY,
+            ]
         ]
     ):
         sample_datasets_all()
