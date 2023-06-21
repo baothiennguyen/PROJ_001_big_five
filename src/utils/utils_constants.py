@@ -77,9 +77,11 @@ ABOUT_PAGE_KEY = "About"
 
 # Frame Keys
 HOME_FRAME_KEY = "Home"
-TAKE_TEST_FRAME_KEY = "Take Test"
+QUESTIONS_FRAME_KEY = "Questions"
 RESULTS_FRAME_KEY = "Results"
 INSTRUCTIONS_FRAME_KEY = "Instructions"
+NEXT_FRAME_KEY = "Next"
+BACK_FRAME_KEY = "Back"
 
 
 CLUSTERING_PAGE_KEY = "Clustering"

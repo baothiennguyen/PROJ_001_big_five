@@ -1,3 +1,5 @@
+import tkinter
+
 import customtkinter
 
 
@@ -81,6 +83,9 @@ class Frame(customtkinter.CTkFrame):
             **kwargs,
         )
 
+    def get_frame_name(self):
+        return self.frame_name
+
 
 class NavigationMenuButton(customtkinter.CTkButton):
     """
@@ -131,3 +136,80 @@ class MenuButton(customtkinter.CTkButton):
             master,
             **kwargs,
         )
+
+
+class NavButton(customtkinter.CTkButton):
+    """
+    Menu button class for pages with a start page
+    Sets defaults that can easily be adjusted
+    """
+
+    def __init__(
+        self,
+        master: any,
+        **kwargs,
+    ):
+        kwargs.setdefault("height", 40)
+        kwargs.setdefault("width", 100)
+        kwargs.setdefault("corner_radius", 20)
+        kwargs.setdefault("border_spacing", 20)
+        # kwargs.setdefault("fg_color", "transparent")
+        # kwargs.setdefault("hover_color", ("gray70", "gray30"))
+        # kwargs.setdefault("text_color", ("gray10", "gray90"))
+        kwargs.setdefault("font", customtkinter.CTkFont(size=20, weight="normal"))
+        # kwargs.setdefault("anchor", "w")
+        super().__init__(
+            master,
+            **kwargs,
+        )
+
+
+class Question(customtkinter.CTkFrame):
+    """
+    Question class for Test page
+    """
+
+    def __init__(
+        self,
+        master: any,
+        prompt: str = "default prompt",
+        **kwargs,
+    ):
+        super().__init__(
+            master,
+            **kwargs,
+        )
+        # create radiobutton frame
+        self.grid_rowconfigure(8, weight=1)
+        self.grid_columnconfigure((0, 2, 4, 6, 8, 10), weight=1)
+        self.radiobutton_frame = customtkinter.CTkFrame(self)
+        self.radiobutton_frame.grid(
+            row=0, column=0, padx=(20, 20), pady=(20, 20), sticky="nsew"
+        )
+        self.radio_var = tkinter.IntVar(value=0)
+        self.label_radio_group = customtkinter.CTkLabel(
+            master=self.radiobutton_frame, text=prompt
+        )
+        self.label_radio_group.grid(
+            row=0, column=0, columnspan=10, padx=10, pady=10, sticky="nsew"
+        )
+        self.radio_button_1 = customtkinter.CTkRadioButton(
+            master=self.radiobutton_frame, variable=self.radio_var, value=0
+        )
+        self.radio_button_1.grid(row=1, column=1, pady=10, padx=20, sticky="new")
+        self.radio_button_2 = customtkinter.CTkRadioButton(
+            master=self.radiobutton_frame, variable=self.radio_var, value=1
+        )
+        self.radio_button_2.grid(row=1, column=3, pady=10, padx=20, sticky="new")
+        self.radio_button_3 = customtkinter.CTkRadioButton(
+            master=self.radiobutton_frame, variable=self.radio_var, value=2
+        )
+        self.radio_button_3.grid(row=1, column=5, pady=10, padx=20, sticky="new")
+        self.radio_button_4 = customtkinter.CTkRadioButton(
+            master=self.radiobutton_frame, variable=self.radio_var, value=3
+        )
+        self.radio_button_4.grid(row=1, column=7, pady=10, padx=20, sticky="new")
+        self.radio_button_5 = customtkinter.CTkRadioButton(
+            master=self.radiobutton_frame, variable=self.radio_var, value=4
+        )
+        self.radio_button_5.grid(row=1, column=9, pady=10, padx=20, sticky="new")
