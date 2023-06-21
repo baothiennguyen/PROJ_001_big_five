@@ -1,7 +1,3 @@
-# from typing import Callable
-# import customtkinter
-# import matplotlib.backends.backend_tkagg as tkagg
-
 import utils.utils_constants as constants
 from gui.gui_config import Page
 

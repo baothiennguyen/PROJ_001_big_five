@@ -9,12 +9,6 @@ from gui.gui_page_data import DataPage
 from gui.gui_page_test import TestPage
 from utils.utils_path import get_root_dir
 
-# from customtkinter.windows.widgets.font import CTkFont
-# from customtkinter.windows.widgets.image import CTkImage
-# import matplotlib.pyplot as plt
-# import matplotlib.backends.backend_tkagg as tkagg
-
-
 root_dir = get_root_dir()
 
 # Modes: "System" (standard), "Dark", "Light"

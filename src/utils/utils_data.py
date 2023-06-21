@@ -7,8 +7,6 @@ import pandas as pd
 
 import utils.utils_constants as constants
 
-# from utils.utils_constants import *
-
 
 def process_dataset(
     dataset_path=constants.ORIGINAL_DATASET_PATH,
